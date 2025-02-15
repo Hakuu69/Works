@@ -56,8 +56,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `firstname`, `middlename`, `lastname`, `birthday`, `email`, `contact`, `password`, `role`, `profimg`, `id1`, `id2`, `resume`) VALUES
 (0, 'Patrick', 'Ocampo', 'Mallari', '1997-03-27', 'patrick@gmail.com', '09123456789', 'bossrome', 'admin', '../uploads/sample.png', '../uploads/sample.png', '../uploads/sample.png', '../uploads/sample.png'),
-(1, 'Charls', 'Marcelo', 'Caliboso', '2002-05-08', 'ysumapagmahal@gmail.com', '09394309127', 'ube', 'employer', '../uploads/sample.png', '../uploads/sample.png', '../uploads/sample.png', '../uploads/sample.png'),
-(2, 'Dave', 'Nino', 'Larracas', '2023-11-03', 'davedipatuli@gmail.com', '09123456789', 'cedrix', 'worker', '../uploads/sample.png', '../uploads/sample.png', '../uploads/sample.png', '../uploads/sample.png');
+(1, 'Charls', 'Marcelo', 'Caliboso', '2002-05-08', 'employer@gmail.com', '09394309127', 'employer', 'employer', '../uploads/sample.png', '../uploads/sample.png', '../uploads/sample.png', '../uploads/sample.png'),
+(2, 'Dave', 'Nino', 'Larracas', '2023-11-03', 'worker@gmail.com', '09123456789', 'worker', 'worker', '../uploads/sample.png', '../uploads/sample.png', '../uploads/sample.png', '../uploads/sample.png');
 
 --
 -- Indexes for dumped tables
