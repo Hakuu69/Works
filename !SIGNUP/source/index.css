@@ -1,0 +1,96 @@
+/* Body */
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+h3 {
+    cursor: default;
+    color: white;
+    font-family: 'Alexandria', sans-serif;
+}
+.section{
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url('../images/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 110vh;
+}
+
+/* Navigation bar */
+.navbar-brand, h4{
+    background-color: none;
+    color: #171515;
+    font-family: 'Alexandria', sans-serif;
+}
+.container {
+    margin-left:6%;
+    margin-right: 6%;
+    margin-top: 4%;
+}
+
+.form-label, span{
+    color: white;
+}
+h4 {
+    margin-left:3%;
+    color: white;
+}
+.content {
+    margin-left:5%;
+    margin-right:5%;
+}
+
+#homebtn {
+    background-color: #171515 !important;
+    border: 1px solid #F9F6F0 !important;
+}
+
+#homebtn:hover {
+    background-color: white !important;
+    color: #bc1823;
+}
+
+/* Login section */
+.error {
+    color: #bc1823;
+}
+
+#login input {
+    background-color: white;
+    border: none;
+    border-bottom: 1px solid black;
+    border-radius: 7px;
+}
+
+#login input:focus {
+    border-bottom: 1px solid white;
+    color: white;
+}
+
+#login button {
+    background-color: #106FFA;
+    border: 1px solid #106FFA;
+}
+
+#login button:hover {
+    background: #0B5ED7;
+    color: white;
+}
+
+#login button:active {
+    transform: translateY(1px);
+}
+
+/* Carousel */
+
+.carousel-item img {
+    height: calc(95vh - 80px);
+    width: 100%;
+}
+
+.carousel .carousel-indicators button {
+    height: 10px;
+    width: 10px;
+    border-radius: 100%;
+}

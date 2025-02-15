@@ -1,0 +1,82 @@
+email alr exists
+<?php 
+                                    if(isset($_GET['error'])) {
+                                        ?>
+                                        <p class = "error pt-3">
+                                            <?php echo "email already exists.";?>
+                                        </p>
+                                    <?php
+                                    }
+                                ?>
+
+
+
+
+
+
+<?php
+
+    /*
+        This is the Signup page where users perform the signup if
+        the user has no account.
+    */
+
+    // Start the session
+    session_start();
+
+    include "connection.php";
+
+    if(isset($_POST["insert"])) {
+
+        // Get the email of the user
+        $email = $_POST['email'];
+
+        // Query to check if the email already exists
+        $checksql = "SELECT FROM users WHERE email = '$email'";
+        $checkun = mysqli_query($conn, $checksql);
+
+        // If the email already exists, an error will show up
+        if(mysqli_num_rows($checkun) > 0) {
+            header("Location: clientReg.php?error");
+            exit();
+        } else {
+            $tm = md5(time());
+            $fnm = $_FILES["image"]["name"];
+            $dst = "./../uploads/".$tm.$fnm;
+            $dst1 = "../uploads/".$tm.$fnm;
+
+            move_uploaded_file($_FILES["image"]["tmp_name"], $dst);
+
+            // Insert the user data into the database
+            $sql = "INSERT into users VALUES(
+                NULL,
+                '$_POST[firstname]',
+                '$_POST[middlename]',
+                '$_POST[lastname]',
+                '$_POST[bdate]',
+                '$_POST[email]',
+                '$_POST[contact]',
+                '$_POST[password]',
+                'worker',
+                '$dst1'
+            )";
+
+            mysqli_query($conn, $sql);
+
+            ?>
+            <script type = "text/javascript">
+                alert("You have been successfully registered, Mabuhay!");
+                window.location.href = "login.php";
+            </script>
+
+            
+
+            <?php
+        }
+    }
+
+    if(isset($_SESSION['id']) && isset($_SESSION['email'])) {
+
+       $firstname = $_SESSION['firstname'];}
+
+?>
