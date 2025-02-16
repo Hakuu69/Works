@@ -17,7 +17,7 @@
 <!-- header section starts  -->
 
 <header>
-  <a href="#home" class="xx"><img src="../images/logo.png" height = "50" width = "50">  | WORKS</a>
+  <a href="#home" class="xx"><img src="../images/logoworker.png" height = "50" width = "50">  | WORKS</a>
 	<nav class="navbar navbar-expand-md">
   <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#main-navigation">
     <span class="navbar-toggler-icon"></span>
@@ -53,7 +53,7 @@
     <div class="content">
         <h3><b style="color:white"></b></h3>
         <h5><i style="color:white"></i></h5>
-        <a href="#worker" class="btn">Find a Client</a>
+        <a href="../source/workerlist.php" class="btn">Find a Client</a>
     </div>
 </section>
 <br>
@@ -94,18 +94,18 @@
 
                 <div class="row">
                     <div class="col-md-4 text-center featured">
-                        <img src="../images/logo.png" width="" height="270" alt="">
+                    <img src="../images/logoworker.png" width="" height="270" alt="">
                         <br><br>
                             <h5>Carl Patrick Mallari - <strong>Member</strong></h5>
                         <br>
                           <p style="font-size: 11px; color:black;">3rd Year at AMA Computer College</p>
                         
-                    
+                          <button class="btn bg-warning"> <a href="https://www.facebook.com/profile.php?id=100005282114692" style="color: white;"> View Profile</a></button>
                         <br><br>
                     </div>
 
                     <div class="col-md-4 text-center featured">
-                        <img src="../images/logo.png" width="" height="270" alt="">
+                    <img src="../images/logoworker.png" width="" height="270" alt="">
                         <br><br>
                             <h5>Jacob Salvador - <strong>Member</strong></h5>
                         <br>
@@ -116,7 +116,7 @@
                     </div>
 
                     <div class="col-md-4 text-center featured">
-                        <img src="../images/logo.png" width="" height="270" alt="">
+                        <img src="../images/logoworker.png" width="" height="270" alt="">
                         <br><br>
                             <h5>Yvan Balinan - <strong>Member</strong></h5>
                         
@@ -133,7 +133,7 @@
 <!-- contact section starts  -->
 <section class="contact" id="contact">
 
-    <h1 class="heading" style="font-weight: bold;">SENDS US A MESSAGE</h1>
+    <h1 class="heading" style="font-weight: bold;">CONTACT US</h1>
 
     <div class="row">
 
@@ -175,10 +175,9 @@
                     </p>
                 </div>
                 <div class = "col-lg-3 col-md-3 col-sm-12 vstack">
-                    <h5 class = "fs-6 fw-semibold">HELPFUL LINKS</h5>
-                    <a class = "small" href = "#home">Home</a>
+                   
 
-                    <a class = "small" href = "#about">About</a>
+                  
                 </div>
                 <div class = "col-lg-3 col-md-3 col-sm-12">
                     <h5 class = "fs-6 fw-semibold">HEAR NEWS FROM US</h5>

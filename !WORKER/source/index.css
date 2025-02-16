@@ -36,7 +36,7 @@ section{
     display: inline-block;
     margin-top: 1rem;
     border-radius: 1rem;
-    background:rgb(255, 192, 44) ;
+    background:rgb(44, 195, 255) ;
     color:#ffffff;
     padding:.9rem 3.5rem;
     cursor: pointer;
@@ -83,7 +83,7 @@ header .navbar a{
     font-size: 1.8rem;
     padding:0 1.5rem;
     margin-left: 5px;
-    color:rgb(255, 192, 44);
+    color:rgb(243, 243, 243);
     font-weight: 800;
 }
 header .navbar a:hover{

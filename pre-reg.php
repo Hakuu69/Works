@@ -69,11 +69,11 @@
         <h2>Join as an employer or worker</h2>
         
         <div class="option">
-            <a href="../WEBSITE/!SIGNUP/source/employerReg.php">I'm an employer, looking for workers</a>
-            <a href="../WEBSITE/!SIGNUP/source/workerReg.php">I'm a worker, looking for employers</a>
+            <a href="../Works/!SIGNUP/source/employerReg.php">I'm an employer, looking for workers</a>
+            <a href="../Works/!SIGNUP/source/workerReg.php">I'm a worker, looking for employers</a>
         </div>
 
-        <a href="../WEBSITE/!SIGNUP/source/login.php" class="btn"> Log In</a>
+        <a href="../Works/!SIGNUP/source/login.php" class="btn"> Log In</a>
     </div>
 
 </body>
