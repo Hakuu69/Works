@@ -34,7 +34,7 @@
         <a class="nav-link" href="#contact">INQUIRIES</a>
       </li>
       <li class = "nav-item" id = "login"> 
-            <a class = "nav-link fw-bold fs-6" href = "../WEBSITE/!SIGNUP/source/login.php"></i>LOGIN</a>
+            <a class = "nav-link fw-bold fs-6" href = "../Works/!SIGNUP/source/login.php"></i>LOGIN</a>
         </li>
         <li class = "nav-item" id = "register"> 
             <a class = "nav-link fw-bold fs-6" href = "pre-reg.php"></i>REGISTER</a>
