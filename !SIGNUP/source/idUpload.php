@@ -31,17 +31,6 @@ if(isset($_POST["insert"])) {
             exit();
         }
 
-        // File upload handling for the second ID
-        $tm_id2 = md5(time() . "id2");
-        $fnm_id2 = $_FILES["id2"]["name"];
-        $dst_id2 = "./../uploads/".$tm_id2.$fnm_id2;
-        $dst_id2_db = "../uploads/".$tm_id2.$fnm_id2;
-
-        if (!move_uploaded_file($_FILES["id2"]["tmp_name"], $dst_id2)) {
-            echo "Failed to upload second ID. Error details: " . $_FILES["id2"]["error"];
-            exit();
-        }
-
         // Insert user data into the database
         $sql = "INSERT INTO users VALUES (
             NULL,
@@ -55,7 +44,7 @@ if(isset($_POST["insert"])) {
             'employer',
             '$_SESSION[profimg]',
             '$dst_id1_db',
-            '$dst_id2_db',
+            'NULL',
             'NULL'
         )";
 
@@ -124,28 +113,15 @@ if(isset($_POST["insert"])) {
             <!-- Heading left-aligned (same position as before) -->
             <h4 class="w-100">Register as Employer</h4>
 
-            <!-- Left Column -->
+            <!-- ID -->
             <div class="col-md-6 d-flex flex-column align-items-center px-4">
                 <div class="w-100 d-flex flex-column align-items-center">
                     <br><br>
                     <img src="../images/profilePhoto.png" class="rounded-4 align-self-center" alt="File Uploaded" id="useruploaded" height="250px" width="500px">
                     <div class="form-group w-100 mt-3">
-                        <label for="id1" class="form-label">Valid ID 1</label>
-                        <input accept="image/*" type="file" class="form-control shadow-none" name="id1" id="upload_id1" required>
+                        <label for="id1" class="form-label">Valid ID</label>
+                        <input accept="image/*" type="file" class="form-control shadow-none" name="id1" id="upload" required>
                         <div class="invalid-feedback">Please submit your first valid ID.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Column -->
-            <div class="col-md-6 d-flex flex-column align-items-center px-4">
-                <div class="w-100 d-flex flex-column align-items-center">
-                    <br><br>
-                    <img src="../images/profilePhoto.png" class="rounded-4 align-self-center" alt="File Uploaded" id="useruploaded" height="250px" width="500px">
-                    <div class="form-group w-100 mt-3">
-                        <label for="id2" class="form-label">Valid ID 2</label>
-                        <input accept="image/*" type="file" class="form-control shadow-none" name="id2" id="upload_id2" required>
-                        <div class="invalid-feedback">Please submit your second valid ID.</div>
                     </div>
                 </div>
             </div>

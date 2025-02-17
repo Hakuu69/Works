@@ -45,7 +45,6 @@ CREATE TABLE `users` (
   `role` varchar(255) NOT NULL,
   `profimg` varchar(500) NOT NULL,
   `id1` varchar(500) NOT NULL,
-  `id2` varchar(500) NOT NULL,
   `resume` varchar(500) NOT NULL,
   `specialty` varchar(255),
   PRIMARY KEY (`id`)
@@ -55,10 +54,10 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `firstname`, `middlename`, `lastname`, `birthday`, `email`, `contact`, `password`, `role`, `profimg`, `id1`, `id2`, `resume`, `specialty`) VALUES
-(0, 'Patrick', 'Ocampo', 'Mallari', '1997-03-27', 'patrick@gmail.com', '09123456789', 'bossrome', 'admin', '../uploads/sample.png', '../uploads/sample.png', '../uploads/sample.png', '../uploads/sample.png', 'test'),
-(1, 'Charls', 'Marcelo', 'Caliboso', '2002-05-08', 'employer@gmail.com', '09394309127', 'employer', 'employer', '../uploads/sample.png', '../uploads/sample.png', '../uploads/sample.png', '../uploads/sample.png', 'test'),
-(2, 'Dave', 'Nino', 'Larracas', '2023-11-03', 'worker@gmail.com', '09123456789', 'worker', 'worker', '../uploads/sample.png', '../uploads/sample.png', '../uploads/sample.png', '../uploads/sample.png', 'test');
+INSERT INTO `users` (`id`, `firstname`, `middlename`, `lastname`, `birthday`, `email`, `contact`, `password`, `role`, `profimg`, `id1`, `resume`, `specialty`) VALUES
+(0, 'Patrick', 'Ocampo', 'Mallari', '1997-03-27', 'patrick@gmail.com', '09123456789', 'bossrome', 'admin', '../uploads/adminProfile.png', '../uploads/adminProfile.png', '../uploads/adminProfile.png', 'admin'),
+(1, 'Charls', 'Marcelo', 'Caliboso', '2002-05-08', 'employer@gmail.com', '09394309127', 'employer', 'employer', '../uploads/employerProfile.jpg', '../uploads/employerID.jpg', 'NULL', 'NULL'),
+(2, 'Dave', 'Nino', 'Larracas', '2023-11-03', 'worker@gmail.com', '09123456789', 'worker', 'worker', '../uploads/workerProfile.png', 'NULL', '../uploads/workerResume.png', 'Welder,Mechanic');
 
 --
 -- Indexes for dumped tables

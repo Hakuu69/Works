@@ -44,7 +44,6 @@ if(isset($_POST["insert"])) {
             'worker',
             '$_SESSION[profimg]',
             'NULL',
-            'NULL',
             '$dst_resume_db',
             '$_SESSION[specialty]'
         )";
