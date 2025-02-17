@@ -150,17 +150,17 @@
 
         <div class = "container-fluid">
 
-            <div class = "row px-3 py-3" id = "main" style="background-color: rgb(255, 192, 44);">
+            <div class = "row px-3 py-3" id = "main" style="background-color: rgb(0, 183, 255);">
 
 
 
                 <!-- Navigation -->
 
-                <div class = "col-2 px-3 py-5 h-100" id = "left" style="background-color: rgb(255, 192, 44);">
+                <div class = "col-2 px-3 py-5 h-100" id = "left" style="background-color: rgb(0, 183, 255);">
 
                     <div class = "navbar-brand">
 
-                        <img src = "../images/logo.png" alt = "JoyBoy" height = "50" width = "140">
+                        <img src = "../images/logoworker.png" alt = "JoyBoy" height = "140" width = "140">
 
                         <span class = "align-center fs-5"> </span> 
 
@@ -224,7 +224,7 @@
 
                     <div class = "d-flex justify-content-between" id = "title">
 
-                        <h5 class = "fs-3 fw-bold py-1" style = "font-family: 'Alexandria', sans-serif; color: #6F5B3E;">DASHBOARD</h5>
+                        <h5 class = "fs-3 fw-bold py-1" style = "font-family: 'Alexandria', sans-serif; color:rgb(147, 150, 0);">DASHBOARD</h5>
 
                         <span class = "small align-self-center" id = "datetime"></span>
 

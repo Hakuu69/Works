@@ -225,17 +225,17 @@
 
         <div class = "container-fluid">
 
-            <div class = "row px-3 py-3" id = "main" style="background-color: rgb(255, 192, 44);">
+            <div class = "row px-3 py-3" id = "main" style="background-color: rgb(0, 183, 255);">
 
 
 
                 <!-- Navigation -->
 
-                <div class = "col-2 px-3 py-5 h-100" id = "left" style="background-color: rgb(255, 192, 44);">
+                <div class = "col-2 px-3 py-5 h-100" id = "left" style="background-color: rgb(0, 183, 255);">
 
                     <div class = "navbar-brand">
 
-                        <img src = "../../images/logo.png" alt = "" height = "50" width = "140">
+                        <img src = "../../images/logoworker.png" alt = "" height = "140" width = "140">
 
                         <span class = "align-center fs-5"></span> 
 
