@@ -433,9 +433,17 @@ destination .card-text p {
     border-radius: 50%; /* Make it circular */
     margin-right: 10px; /* Add some margin to the right */
 }
-  
 
+/* PROFILE SECTION*/
+.profile-background{
+    color: #00c0fa;
+    background-color: #79e0ff;
+}
 
+.profile-header{
+    text-align: center;
+    font-weight: bold;
+}
 
 
 @media (max-width:768px){
