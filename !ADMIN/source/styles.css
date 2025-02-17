@@ -12,7 +12,7 @@ body {
 
     max-height: 100vh;
 
-    background-color: rgb(255, 192, 44);
+    background-color: rgb(243, 243, 243);
 
     background-image: var(--bs-gradient);
 
@@ -54,7 +54,7 @@ body {
 
 #left button:hover {
 
-    color: #C4AE78;
+    color: #000000;
 
 }
 
@@ -208,7 +208,7 @@ textarea {
 
 #updateuser:hover {
 
-    background-color: #6F5B3E;
+    background-color: #ffffff;
 
     color: rgb(255, 192, 44);
 
@@ -234,7 +234,7 @@ textarea {
 
     background-color: #ffffff;
 
-    color: #6F5B3E;
+    color: #000000;
 
 }
 
@@ -308,9 +308,9 @@ textarea {
 
 thead tr:nth-child(1) th {
 
-    background: #6F5B3E;
+    background: #f0f0f0;
 
-    color: #ffffff;
+    color: #000000;
 
     position: sticky;
 
