@@ -70,7 +70,7 @@ $ (function() {
 
             data: {
 
-                username: user
+                email: user
 
             },
 
@@ -89,8 +89,6 @@ $ (function() {
                 $("#email").val(data.email);
 
                 $("#contact").val(data.contact);
-
-                $("#username").val(data.username);
 
                 $("#password").val(data.password);
 
@@ -184,7 +182,7 @@ $ (function() {
 
             data: {
 
-                username: user
+                email: user
 
             },
 

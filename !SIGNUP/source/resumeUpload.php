@@ -45,7 +45,8 @@ if(isset($_POST["insert"])) {
             '$_SESSION[profimg]',
             'NULL',
             'NULL',
-            '$dst_resume_db'
+            '$dst_resume_db',
+            '$_SESSION[specialty]'
         )";
 
         if (mysqli_query($conn, $sql)) {

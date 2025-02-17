@@ -19,6 +19,13 @@
         $_SESSION['email'] = $_POST['email'];
         $_SESSION['contact'] = $_POST['contact'];
         $_SESSION['password'] = $_POST['password'];
+
+        //checkbox specialty
+        if (isset($_POST['specialty'])) {
+            $_SESSION['specialty'] = implode(',', $_POST['specialty']);
+        } else {
+            $_SESSION['specialty'] = '';
+        }
     
         // File upload handling for the profile photo
         $tm_profile = md5(time() . "profile");
@@ -122,6 +129,31 @@
                                     <label for = "contact" class = "form-label">Contact Number</label>
                                     <input type = "number" class = "form-control shadow-none" name = "contact" placeholder = "09123456789" id = "contact" required>
                                     <div class = "invalid-feedback">Please enter user contact.</div>
+                                </div>
+                            </div>
+
+                            <!-- Specialty Section -->
+                            <div class="specialty-section pt-3">
+                                <label class="specialty-title"><strong>Specialty:</strong></label>
+
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="welder" name="specialty[]" value="Welder">
+                                    <label for="welder">Welder</label>
+                                </div>
+
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="mechanic" name="specialty[]" value="Mechanic">
+                                    <label for="mechanic">Mechanic</label>
+                                </div>
+
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="electrician" name="specialty[]" value="Electrician">
+                                    <label for="electrician">Electrician</label>
+                                </div>
+
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="construction" name="specialty[]" value="Construction Worker">
+                                    <label for="construction">Construction Worker</label>
                                 </div>
                             </div>
 

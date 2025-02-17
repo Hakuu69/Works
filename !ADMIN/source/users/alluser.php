@@ -52,7 +52,7 @@
 
         <!-- Page title and meta tags -->
 
-        <title>JoyBoy | All Users</title>
+        <title>Works | All Users</title>
 
         <meta charset = "utf-8">
 

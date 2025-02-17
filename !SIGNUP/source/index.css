@@ -94,3 +94,32 @@ h4 {
     width: 10px;
     border-radius: 100%;
 }
+
+.specialty-section {
+    margin-top: 15px;
+}
+
+.specialty-title {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: white; /* White checkboxes */
+    margin-right: 8px;
+}
+
+.checkbox-group label {
+    color: white;
+    font-size: 16px;
+}
