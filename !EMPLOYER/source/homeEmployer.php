@@ -50,7 +50,7 @@ if (isset($_SESSION['id'])) {
 <!-- header section starts  -->
 
 <header>
-        <a href="#home" class="xx"><img src="../images/logo.png" height="50" width="50"> | WORKS</a>
+        <a href="#home" class="xx"><img src="../images/logoworker.png" height="50" width="50"> | WORKS</a>
         <nav class="navbar navbar-expand-md">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navigation">
                 <span class="navbar-toggler-icon custom-hamburger"></span>
@@ -212,10 +212,6 @@ if (isset($_SESSION['id'])) {
                     </p>
                 </div>
                 <div class = "col-lg-3 col-md-3 col-sm-12 vstack">
-                    <h5 class = "fs-6 fw-semibold">HELPFUL LINKS</h5>
-                    <a class = "small" href = "#home">Home</a>
-
-                    <a class = "small" href = "#about">About</a>
                 </div>
                 <div class = "col-lg-3 col-md-3 col-sm-12">
                     <h5 class = "fs-6 fw-semibold">HEAR NEWS FROM US</h5>

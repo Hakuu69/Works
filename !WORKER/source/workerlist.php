@@ -50,6 +50,7 @@ $proposals = [
                     <button class="btn btn-message">Message</button>
                     <br></br>
                     <button class="btn btn-hire">Hire</button>
+                    <br></br>
                     <button class="btn btn-profile">Profile</button>
                 </div>
             </div>

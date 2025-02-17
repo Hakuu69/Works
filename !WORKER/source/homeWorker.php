@@ -100,7 +100,7 @@
                         <br>
                           <p style="font-size: 11px; color:black;">3rd Year at AMA Computer College</p>
                         
-                          <button class="btn bg-warning"> <a href="https://www.facebook.com/profile.php?id=100005282114692" style="color: white;"> View Profile</a></button>
+                          
                         <br><br>
                     </div>
 
@@ -111,7 +111,7 @@
                         <br>
                             <p style="font-size: 11px; color:black;">3rd Year at AMA Computer College</p>
                         
-                    <button class="btn bg-warning"> <a href="https://www.facebook.com/profile.php?id=100005282114692" style="color: white;"> View Profile</a></button>
+                    
                         <br><br>
                     </div>
 
@@ -122,7 +122,7 @@
                         
                         <p style="font-size: 11px; color:black;">3rd Year at AMA Computer College</p>
                         <br>
-                    <button class="btn bg-warning"> <a href="https://www.facebook.com/markchester.cinco?mibextid=ZbWKwL" style="color: white;"> View Profile</a></button>
+                    
                         <br><br>
                     </div>
                 </section>  

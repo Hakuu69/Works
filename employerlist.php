@@ -48,6 +48,7 @@ $proposals = [
                 <div class="actions">
                     <button class="btn btn-message">Message</button>
                     <button class="btn btn-hire">Hire</button>
+                    <button class="btn btn-profile">Profile</button>
                 </div>
             </div>
         <?php endforeach; ?>
