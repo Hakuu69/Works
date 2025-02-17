@@ -130,6 +130,7 @@
                                     <input type = "number" class = "form-control shadow-none" name = "contact" placeholder = "09123456789" id = "contact" required>
                                     <div class = "invalid-feedback">Please enter user contact.</div>
                                 </div>
+                        
                             </div>
 
                             <!-- Specialty Section -->

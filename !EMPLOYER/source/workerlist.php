@@ -41,7 +41,7 @@ $proposals = [
 <!-- header section starts  -->
 
 <header>
-  <a href="../source/homeEmployer.php" class="xx"><img src="../images/logoworker.png" height="50" width="50"> | WORKS</a>
+  <a href="#home" class="xx"><img src="../images/logo.png" height="50" width="50"> | WORKS</a>
   <nav class="navbar navbar-expand-md">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navigation">
       <span class="navbar-toggler-icon custom-hamburger"></span>
@@ -53,7 +53,7 @@ $proposals = [
             <i class="fas fa-bars"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="homeEmployer.php">HOME</a>
+            <a class="dropdown-item" href="#home">HOME</a>
             <a class="dropdown-item" href="workerlist.php">WORKERS</a>
             <a class="dropdown-item" href="#about">ABOUT US</a>
             <a class="dropdown-item" href="#contact">INQUIRIES</a>
@@ -96,7 +96,6 @@ $proposals = [
                 <div class="actions">
                     <button class="btn btn-message">Message</button>
                     <button class="btn btn-hire">Hire</button>
-                    <button class="btn btn-profile">Profile</button>
                 </div>
             </div>
         <?php endforeach; ?>
@@ -127,7 +126,10 @@ $proposals = [
                     </p>
                 </div>
                 <div class = "col-lg-3 col-md-3 col-sm-12 vstack">
-                    
+                    <h5 class = "fs-6 fw-semibold">HELPFUL LINKS</h5>
+                    <a class = "small" href = "#home">Home</a>
+
+                    <a class = "small" href = "#about">About</a>
                 </div>
                 <div class = "col-lg-3 col-md-3 col-sm-12">
                     <h5 class = "fs-6 fw-semibold">HEAR NEWS FROM US</h5>
