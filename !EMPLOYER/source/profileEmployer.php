@@ -63,10 +63,8 @@ if (isset($_SESSION['id'])) {
                         </div>
                         <div class="dropdown-divider"></div>
                         <!-- Other navigation items -->
-                        <a class="dropdown-item" href="#home">HOME</a>
-                        <a class="dropdown-item" href="workerlist.php">WORKERS</a>
-                        <a class="dropdown-item" href="#about">ABOUT US</a>
-                        <a class="dropdown-item" href="#contact">INQUIRIES</a>
+                        <a class="dropdown-item" href="../source/homeEmployer.php">HOME</a>
+                        <a class="dropdown-item" href="../source/workerlist.php">WORKERS</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="../../!SIGNUP/source/logout.php"><i class="bi bi-box-arrow-left pe-3 fs-4" id="logouticon"></i>LOGOUT</a>
                     </div>

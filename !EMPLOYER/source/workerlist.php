@@ -41,7 +41,7 @@ $proposals = [
 <!-- header section starts  -->
 
 <header>
-  <a href="#home" class="xx"><img src="../images/logo.png" height="50" width="50"> | WORKS</a>
+  <a href="#home" class="xx"><img src="../images/logoworker.png" height="50" width="50"> | WORKS</a>
   <nav class="navbar navbar-expand-md">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navigation">
       <span class="navbar-toggler-icon custom-hamburger"></span>
@@ -104,64 +104,6 @@ $proposals = [
 
 
 
-<!-- Footer -->
-<footer class = "footer">
-            <div class = "row">
-                <div class = "col-lg-3 col-md-3 col-sm-12">
-                    <h2 class = "fs-4" style = "font-family: 'Alexandria', sans-serif;">Works</h2>
-                    <p class = "small">
-                        Works Started as a small website to help our fellow blue collars workers in Tarlac City.
-                        <br><br>
-                        With limited resources 3 Students dared to create a blue collar website with minimal experience.
-                    </p>
-                </div>
-                <div class = "col-lg-3 col-md-3 col-sm-12">
-                    <h5 class = "fs-6 fw-semibold">CONTACT US</h5>
-                    <p class = "small">
-                        <i class = "bi bi-geo-alt"></i>&nbsp; 396,Calle Onse, Paraiso
-                        <br>&nbsp; &nbsp; &nbsp; Tarlac City, Tarlac,
-                        <br>&nbsp; &nbsp; &nbsp; Philippines
-                        <br><i class = "bi bi-envelope"></i>&nbsp; osokcarl@gmail.com
-                        <br><i class = "bi bi-telephone"></i>&nbsp; +639705318246
-                    </p>
-                </div>
-                <div class = "col-lg-3 col-md-3 col-sm-12 vstack">
-                    <h5 class = "fs-6 fw-semibold">HELPFUL LINKS</h5>
-                    <a class = "small" href = "#home">Home</a>
 
-                    <a class = "small" href = "#about">About</a>
-                </div>
-                <div class = "col-lg-3 col-md-3 col-sm-12">
-                    <h5 class = "fs-6 fw-semibold">HEAR NEWS FROM US</h5>
-                    <p class = "small">
-                        Subscribe to our monthly newsletter to receive news about
-                        new updates to the website
-                    </p><br>
-                    <form class = "form-group needs-validation" novalidate>
-                        <div class = "input-group">
-                            <input type = "email" class = "form-control shadow-none rounded-pill" id = "email-footer" placeholder = "Your email address" required> 
-                            <br><br>
-                            <button class = "btn btn-primary px-2 rounded-pill shadow-none" type = "submit" id = "email-btn">Subscribe Now!</button>
-                            <div class = "invalid-feedback">
-                                Please provide a valid email address.
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class = "container-fluid row mt-4 pt-4 pb-3" id = "copyright">
-                <div class = "col-6 text-start">
-                    <p>&copy; 2024 Works | Blue Collar Website in Tarlac City</p>
-                </div>
-                <div class = "col-6 text-end">
-                    <a href = "#facebook"><i class = "bi bi-facebook"></i></a>
-                    <a href = "#twitter"><i class = "bi bi-twitter"></i></a>
-                    <a href = "#instagram"><i class = "bi bi-instagram"></i></a>
-                    <a href = "#youtube"><i class = "bi bi-youtube"></i></a>
-                    <a href = "#linkedin"><i class = "bi bi-linkedin"></i></a>
-                    <a href = "#pinterest"><i class = "bi bi-pinterest"></i></a>
-                </div>
-            </div>
-        </footer> 
 </body>
 </html>
