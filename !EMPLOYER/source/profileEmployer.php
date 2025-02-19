@@ -63,8 +63,10 @@ if (isset($_SESSION['id'])) {
                         </div>
                         <div class="dropdown-divider"></div>
                         <!-- Other navigation items -->
-                        <a class="dropdown-item" href="../source/homeEmployer.php">HOME</a>
-                        <a class="dropdown-item" href="../source/workerlist.php">WORKERS</a>
+                        <a class="dropdown-item" href="../../!EMPLOYER/source/homeEmployer.php">HOME</a>
+                        <a class="dropdown-item" href="workerlist.php">WORKERS</a>
+                        <a class="dropdown-item" href="#about">ABOUT US</a>
+                        <a class="dropdown-item" href="#contact">INQUIRIES</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="../../!SIGNUP/source/logout.php"><i class="bi bi-box-arrow-left pe-3 fs-4" id="logouticon"></i>LOGOUT</a>
                     </div>
@@ -90,6 +92,10 @@ if (isset($_SESSION['id'])) {
 <!-- Profile form -->
 <div class="container">
     <form action="updateProfile.php" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="profimg">Profile Image</label>
+            <input type="file" class="form-control" id="profimg" name="profimg" accept="image/*">
+        </div>
         <div class="form-group">
             <label for="firstname">First Name</label>
             <input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $row['firstname']; ?>" disabled>
@@ -118,16 +124,9 @@ if (isset($_SESSION['id'])) {
             <label for="id1">ID 1</label>
             <input type="file" class="form-control" id="id1" name="id1" accept="image/*">
         </div>
-        <div class="form-group">
-            <label for="id2">ID 2</label>
-            <input type="file" class="form-control" id="id2" name="id2" accept="image/*">
-        </div>
-        <div class="form-group">
-            <label for="profimg">Profile Image</label>
-            <input type="file" class="form-control" id="profimg" name="profimg" accept="image/*">
-        </div>
         <!-- Add other editable fields here -->
         <button type="submit" class="btn btn-primary">Update Profile</button>
+        <br><br><br>
     </form>
 </div>
 

@@ -193,7 +193,7 @@
 
                         <li class = "nav-item d-flex pb-5" id = "logout">
 
-                            <a class = "nav-link fw-bold fs-6" href = "../../../Login/source/logout.php"><i class="bi bi-box-arrow-left pe-3 fs-4"></i>Logout</a>
+                            <a class = "nav-link fw-bold fs-6" href = "../../../!SIGNUP/source/logout.php"><i class="bi bi-box-arrow-left pe-3 fs-4"></i>Logout</a>
 
                         </li>
 
@@ -417,7 +417,7 @@
 
         // Redirect to the Login page if the user is not logged in.
 
-        header("Location: ../../../Login/source/login.php");
+        header("Location: ../../../!SIGNUP/source/login.php");
 
         exit();
 
