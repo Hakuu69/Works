@@ -45,7 +45,8 @@ if(isset($_POST["insert"])) {
             '$_SESSION[profimg]',
             '$dst_id1_db',
             'NULL',
-            'NULL'
+            'NULL',
+            '0'
         )";
 
         if (mysqli_query($conn, $sql)) {

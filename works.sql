@@ -46,7 +46,8 @@ CREATE TABLE `users` (
   `profimg` varchar(500) NOT NULL,
   `id1` varchar(500) NOT NULL,
   `resume` varchar(500) NOT NULL,
-  `specialty` varchar(255),
+  `specialty` varchar(255) NOT NULL,
+  `isHired` BOOLEAN NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -54,10 +55,10 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `firstname`, `middlename`, `lastname`, `birthday`, `email`, `contact`, `password`, `role`, `profimg`, `id1`, `resume`, `specialty`) VALUES
-(0, 'Patrick', 'Ocampo', 'Mallari', '1997-03-27', 'patrick@gmail.com', '09123456789', 'bossrome', 'admin', '../uploads/adminProfile.png', '../uploads/adminProfile.png', '../uploads/adminProfile.png', 'admin'),
-(1, 'Charls', 'Marcelo', 'Caliboso', '2002-05-08', 'employer@gmail.com', '09394309127', 'employer', 'employer', '../uploads/employerProfile.jpg', '../uploads/employerID.jpg', 'NULL', 'NULL'),
-(2, 'Dave', 'Nino', 'Larracas', '2023-11-03', 'worker@gmail.com', '09123456789', 'worker', 'worker', '../uploads/workerProfile.png', 'NULL', '../uploads/workerResume.png', 'Welder,Mechanic');
+INSERT INTO `users` (`id`, `firstname`, `middlename`, `lastname`, `birthday`, `email`, `contact`, `password`, `role`, `profimg`, `id1`, `resume`, `specialty`, `isHired`) VALUES
+(0, 'Patrick', 'Ocampo', 'Mallari', '1997-03-27', 'patrick@gmail.com', '09123456789', 'bossrome', 'admin', '../uploads/adminProfile.png', '../uploads/adminProfile.png', '../uploads/adminProfile.png', 'admin', '0'),
+(1, 'Charls', 'Marcelo', 'Caliboso', '2002-05-08', 'employer@gmail.com', '09394309127', 'employer', 'employer', '../uploads/employerProfile.jpg', '../uploads/employerID.jpg', 'NULL', 'NULL', '0'),
+(2, 'Dave', 'Nino', 'Larracas', '2023-11-03', 'worker@gmail.com', '09123456789', 'worker', 'worker', '../uploads/workerProfile.jpg', 'NULL', '../uploads/workerResume.jpg', 'Welder,Mechanic', '0');
 
 --
 -- Indexes for dumped tables
