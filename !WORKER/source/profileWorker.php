@@ -68,10 +68,11 @@ if (isset($_SESSION['id'])) {
                             </div>
                             <div class="dropdown-divider"></div>
                             <!-- Other navigation items -->
-                            <a class="dropdown-item" href="#home">HOME</a>
-                            <a class="dropdown-item" href="employerlist.php">EMPLOYERS</a>
-                            <a class="dropdown-item" href="#about">ABOUT US</a>
-                            <a class="dropdown-item" href="#contact">INQUIRIES</a>
+                            <a class="dropdown-item" href="../../!WORKER/source/homeWorker.php">HOME</a>
+                            <a class="dropdown-item" href="../../!WORKER/source/employerlist.php">EMPLOYERS</a>
+                            <a class="dropdown-item" href="../../!WORKER/communication/messaging.php">MESSAGES</a>
+                            <a class="dropdown-item" href="../../!WORKER/source/homeWorker.php#about">ABOUT US</a>
+                            <a class="dropdown-item" href="../../!WORKER/source/homeWorker.php#contact">INQUIRIES</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="../../!SIGNUP/source/logout.php"><i class="bi bi-box-arrow-left pe-3 fs-4" id="logouticon"></i>LOGOUT</a>
                         </div>
@@ -80,7 +81,6 @@ if (isset($_SESSION['id'])) {
             </div>
         </nav>
     </header>
-
 
 <!-- header section ends -->
 

@@ -278,7 +278,7 @@
 
                                                 echo "<td>"; echo $row["id"]; echo "</td>";
 
-                                                $imagePath = isset($row['profimg']) ? '/Works/!SIGNUP/uploads/' . $row['profimg'] : '/Works/!SIGNUP/uploads/default/image.png';
+                                                $imagePath = isset($row['profimg']) ? '/Works/!SIGNUP/uploads/' . $row['profimg'] : '/Works/!SIGNUP/uploads/default/profilePhoto.png';
                                                 echo '<td><img src="' . $imagePath . '" alt="User Image" width="100" height="100"></td>';
 
                                                 echo "<td>"; echo $row["firstname"]; echo "</td>";

@@ -63,37 +63,38 @@ $numrows = mysqli_num_rows($res);
 <!-- header section starts  -->
 
 <header>
-   <a href="../../!WORKER/source/homeWorker.php#home" class="xx"><img src="../images/logoworker.png" height="50" width="50"> | WORKS</a>
-   <nav class="navbar navbar-expand-md">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navigation">
-         <span class="navbar-toggler-icon custom-hamburger"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="main-navigation">
-         <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-               <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="fas fa-bars"></i>
-               </a>
-               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <!-- Profile section at the top -->
-                  <div class="dropdown-item profile-section">
-                     <img src="<?php echo $profile_photo_path; ?>" alt="Profile Photo" class="profile-photo">
-                     <a href="profileWorker.php">PROFILE</a>
-                  </div>
-                  <div class="dropdown-divider"></div>
-                  <!-- Other navigation items -->
-                  <a class="dropdown-item" href="../../!WORKER/source/homeWorker.php">HOME</a>
-                  <a class="dropdown-item" href="employerlist.php">EMPLOYERS</a>
-                  <a class="dropdown-item" href="../../!WORKER/source/homeWorker.php#about">ABOUT US</a>
-                  <a class="dropdown-item" href="../../!WORKER/source/homeWorker.php#contact">INQUIRIES</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="../../!SIGNUP/source/logout.php"><i class="bi bi-box-arrow-left pe-3 fs-4" id="logouticon"></i>LOGOUT</a>
-               </div>
-            </li>
-         </ul>
-      </div>
-   </nav>
-</header>
+        <a href="../../!WORKER/source/homeWorker.php#home" class="xx"><img src="../images/logoworker.png" height="50" width="50"> | WORKS</a>
+        <nav class="navbar navbar-expand-md">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navigation">
+                <span class="navbar-toggler-icon custom-hamburger"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="main-navigation">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-bars"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <!-- Profile section at the top -->
+                            <div class="dropdown-item profile-section">
+                                <img src="<?php echo $profile_photo_path; ?>" alt="Profile Photo" class="profile-photo">
+                                <a href="profileWorker.php">PROFILE</a>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <!-- Other navigation items -->
+                            <a class="dropdown-item" href="../../!WORKER/source/homeWorker.php">HOME</a>
+                            <a class="dropdown-item" href="../../!WORKER/source/employerlist.php">EMPLOYERS</a>
+                            <a class="dropdown-item" href="../../!WORKER/communication/messaging.php">MESSAGES</a>
+                            <a class="dropdown-item" href="../../!WORKER/source/homeWorker.php#about">ABOUT US</a>
+                            <a class="dropdown-item" href="../../!WORKER/source/homeWorker.php#contact">INQUIRIES</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="../../!SIGNUP/source/logout.php"><i class="bi bi-box-arrow-left pe-3 fs-4" id="logouticon"></i>LOGOUT</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
 <!-- header section ends -->
 <body>
@@ -119,7 +120,7 @@ $numrows = mysqli_num_rows($res);
             </div>
             <div class="buttons">
                   <a href="employerHire.php?id=' . $employer['id'] . '" class="hire">Apply</a>
-                  <a href="' . $employer['message_link'] . '" class="message">Message</a>
+                  <a href="../communication/messaging.php?id=' . $employer['id'] . '" class="message">Message</a>
                   <a href="employerProfile.php?id=' . $employer['id'] . '" class="profile">Profile</a>
             </div>
          </div>

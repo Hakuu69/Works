@@ -94,7 +94,8 @@ if (isset($_GET['id'])) {
                   <div class="dropdown-divider"></div>
                   <!-- Other navigation items -->
                   <a class="dropdown-item" href="../../!EMPLOYER/source/homeEmployer.php">HOME</a>
-                  <a class="dropdown-item" href="workerlist.php">WORKERS</a>
+                  <a class="dropdown-item" href="../../!EMPLOYER/source/workerlist.php">WORKERS</a>
+                  <a class="dropdown-item" href="../../!EMPLOYER/communication/messaging.php">MESSAGES</a>
                   <a class="dropdown-item" href="../../!EMPLOYER/source/homeEmployer.php#about">ABOUT US</a>
                   <a class="dropdown-item" href="../../!EMPLOYER/source/homeEmployer.php#contact">INQUIRIES</a>
                   <div class="dropdown-divider"></div>

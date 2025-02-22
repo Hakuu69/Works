@@ -121,7 +121,8 @@ $numrows = mysqli_num_rows($res);
                   <div class="dropdown-divider"></div>
                   <!-- Other navigation items -->
                   <a class="dropdown-item" href="../../!EMPLOYER/source/homeEmployer.php">HOME</a>
-                  <a class="dropdown-item" href="workerlist.php">WORKERS</a>
+                  <a class="dropdown-item" href="../../!EMPLOYER/source/workerlist.php">WORKERS</a>
+                  <a class="dropdown-item" href="../../!EMPLOYER/communication/messaging.php">MESSAGES</a>
                   <a class="dropdown-item" href="../../!EMPLOYER/source/homeEmployer.php#about">ABOUT US</a>
                   <a class="dropdown-item" href="../../!EMPLOYER/source/homeEmployer.php#contact">INQUIRIES</a>
                   <div class="dropdown-divider"></div>
@@ -157,7 +158,7 @@ $numrows = mysqli_num_rows($res);
             </div>
             <div class="buttons">
                   <a href="workerHire.php?id=' . $worker['id'] . '" class="hire">Hire</a>
-                  <a href="' . $worker['message_link'] . '" class="message">Message</a>
+                  <a href="../communication/messaging.php?id=' . $worker['id'] . '" class="message">Message</a>
                   <a href="workerProfile.php?id=' . $worker['id'] . '" class="profile">Profile</a>
             </div>
          </div>
