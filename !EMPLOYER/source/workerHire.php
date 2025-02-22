@@ -23,6 +23,7 @@ if (isset($_SESSION['id'])) {
     $profile_photo_path = '../../!SIGNUP/images/profilePhoto.png';
 }
 
+
 // Check if worker ID is passed
 if (isset($_GET['id'])) {
     $worker_id = $_GET['id'];
@@ -49,6 +50,21 @@ if (isset($_GET['id'])) {
     echo "No worker ID provided.";
     exit;
 }
+
+// Handle hiring action
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $stmt = $conn->prepare("UPDATE users SET isHired = 1 WHERE id = ? AND role = 'worker'");
+    $stmt->bind_param("i", $worker_id);
+    $stmt->execute();
+
+    if ($stmt->affected_rows > 0) {
+        echo "Worker hired successfully.";
+    } else {
+        echo "Failed to hire worker.";
+    }
+
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -68,6 +84,47 @@ if (isset($_GET['id'])) {
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1"> 
    <link rel="stylesheet" type="text/css" href="index.css">
+
+   <style>
+        .slider-container {
+            width: 100%;
+            max-width: 300px;
+            margin: 20px auto;
+            position: relative;
+        }
+        .slider {
+            width: 100%;
+            height: 40px;
+            background-color: #f1f1f1;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            overflow: hidden;
+            position: relative;
+        }
+        .slider .handle {
+            width: 40px;
+            height: 100%;
+            background-color: #007bff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: left 0.2s;
+        }
+        .slider.complete {
+            background-color: #28a745;
+        }
+        .slider.disabled {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        .slider-label {
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
@@ -118,7 +175,93 @@ if (isset($_GET['id'])) {
     <a>Contact: <?php echo $worker['contact']; ?></a>
     <a>Resume: <a href="../../!SIGNUP/uploads/<?php echo $worker['resume']; ?>" target="_blank">View Resume</a></a>
     <a>Hired Status: <?php echo $worker['isHired'] ? 'Hired' : 'Not Hired'; ?></a>
-    <a href="workerHire.php?id=<?php echo $worker_id; ?>" class="btn btn-primary hire-button">Hire <?php echo $worker['firstname']; ?></a>
 </div>
+
+<!-- Slider for confirmation -->
+<div class="slider-container">
+    <div class="slider-label">
+        <?php if ($worker['isHired']) { ?>
+            <?php echo $worker['firstname'] . ' ' . $worker['middlename'] . ' ' . $worker['lastname']; ?> is already hired
+        <?php } else { ?>
+            Slide if you want to hire <?php echo $worker['firstname'] . ' ' . $worker['middlename'] . ' ' . $worker['lastname']; ?>
+        <?php } ?>
+    </div>
+    <div class="slider <?php echo $worker['isHired'] ? 'disabled' : ''; ?>" id="slider">
+        <div class="handle"></div>
+    </div>
+</div>
+
+<script>
+    const slider = document.getElementById('slider');
+    const handle = slider.querySelector('.handle');
+    let isDragging = false;
+
+    if (!slider.classList.contains('disabled')) {
+        handle.addEventListener('mousedown', function() {
+            isDragging = true;
+        });
+
+        document.addEventListener('mouseup', function() {
+            isDragging = false;
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (isDragging) {
+                const rect = slider.getBoundingClientRect();
+                const offsetX = e.clientX - rect.left;
+                if (offsetX >= 0 && offsetX <= slider.offsetWidth - handle.offsetWidth) {
+                    handle.style.left = offsetX + 'px';
+                }
+                if (handle.offsetLeft >= slider.offsetWidth - handle.offsetWidth) {
+                    slider.classList.add('complete');
+                    isDragging = false;
+                    // Make an AJAX POST request to hire the worker
+                    fetch(window.location.href, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: 'hire=true'
+                    }).then(response => response.text())
+                      .then(data => {
+                          alert(data);
+                          location.reload();
+                      });
+                }
+            }
+        });
+
+        // Add touch support for mobile devices
+        handle.addEventListener('touchstart', function() {
+            isDragging = true;
+        });
+
+        document.addEventListener('touchend', function() {
+            isDragging = false;
+        });
+
+        document.addEventListener('touchmove', function(e) {
+            if (isDragging) {
+                const rect = slider.getBoundingClientRect();
+                const offsetX = e.touches[0].clientX - rect.left;
+                if (offsetX >= 0 && offsetX <= slider.offsetWidth - handle.offsetWidth) {
+                    handle.style.left = offsetX + 'px';
+                }
+                if (handle.offsetLeft >= slider.offsetWidth - handle.offsetWidth) {
+                    slider.classList.add('complete');
+                    isDragging = false;
+                    // Make an AJAX POST request to hire the worker
+                    fetch(window.location.href, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: 'hire=true'
+                    }).then(response => response.text())
+                      .then(data => {
+                          alert(data);
+                          location.reload();
+                      });
+                }
+            }
+        });
+    }
+</script>
 </body>
 </html>

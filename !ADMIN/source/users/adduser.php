@@ -14,106 +14,65 @@
 
     // Start session
 
-    session_start();
+// Start session
+session_start();
 
+include '../connection.php';
 
+if (isset($_POST["insert"])) {
+    // Get the email of the user
+    $email = $_POST['email'];
 
-    include '../connection.php';
+    // Query to check if the email already exists
+    $checksql = "SELECT * FROM users WHERE email = '$email'";
+    $checkun = mysqli_query($conn, $checksql);
 
+    // If the email already exists, an error will show up
+    if (mysqli_num_rows($checkun) > 0) {
+        header("Location: adduser.php?error");
+        exit();
+    } else {
+        $tm = md5(time());
+        $fnm = $_FILES["image"]["name"];
+        $uploadDir = "../../../!SIGNUP/uploads/";
 
+        // Ensure the directory exists
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
 
-    if(isset($_POST["insert"])) {
+        $dst = $uploadDir . $tm . $fnm;
+        $dst1 = $tm . $fnm;
 
-
-
-        // Get the email of the user
-
-        $email = $_POST['email'];
-
-
-
-        // Query to check if the email already exists
-
-        $checksql = "SELECT * FROM users WHERE email = '$email'";
-
-        $checkun = mysqli_query($conn, $checksql);
-
-        
-
-        // If the email already exists, an error will show up
-
-        if(mysqli_num_rows($checkun) > 0) {
-
-            header("Location: adduser.php?error");
-
-            exit();
-
-        } else {
-
-            $tm = md5(time());
-
-            $fnm = $_FILES["image"]["name"];
-
-            $dst = "../../uploads/".$tm.$fnm;
-
-            $dst1 = "../uploads/".$tm.$fnm;
-
-
-
-            move_uploaded_file($_FILES["image"]["tmp_name"], $dst);
-
-
-
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $dst)) {
             // Insert the user data into the database
-
-            $sql = "INSERT into users VALUES(
-
-                NULL,
-
+            $sql = "INSERT INTO users (firstname, middlename, lastname, birthday, email, contact, password, role, profimg) VALUES (
                 '$_POST[firstname]',
-
                 '$_POST[middlename]',
-
                 '$_POST[lastname]',
-
                 '$_POST[bdate]',
-
                 '$_POST[email]',
-
                 '$_POST[contact]',
-
                 '$_POST[password]',
-
                 '$_POST[role]',
-
                 '$dst1'
             )";
-    //temp for id:
-    //'$dst_id1_db',
-    //'$dst_id2_db'
-
 
             mysqli_query($conn, $sql);
 
-
-
             ?>
 
-            <script type = "text/javascript">
-
+            <script type="text/javascript">
                 alert("User successfully added.");
-
                 window.location.href = "adduser.php";
-
             </script>
 
-
-
             <?php
-
+        } else {
+            echo "Error: Could not upload file.";
         }
-
     }
+}
 
 
 

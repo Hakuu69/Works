@@ -401,6 +401,39 @@ destination .card-text p {
     gap:1.5rem;
 }
 
+/*hamburger nav*/
+.custom-hamburger {
+    display: block;
+    width: 35px;
+    height: 4px;
+    background-color: #FFC107;
+    margin: 7px 0;
+}
+
+.custom-hamburger::before,
+.custom-hamburger::after {
+    content: '';
+    display: block;
+    width: 35px;
+    height: 4px;
+    background-color: #FFC107;
+    margin: 7px 0;
+}
+
+/*profile photo*/
+
+.profile-section {
+    display: flex;
+    align-items: center;
+}
+
+.profile-photo {
+    width: 40px; /* Set the width of the profile photo */
+    height: 40px; /* Set the height of the profile photo */
+    border-radius: 50%; /* Make it circular */
+    margin-right: 10px; /* Add some margin to the right */
+}
+
 
 @media (max-width:768px){
     header .fa-bars{

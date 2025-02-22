@@ -63,7 +63,7 @@ $numrows = mysqli_num_rows($res);
 <!-- header section starts  -->
 
 <header>
-   <a href="#home" class="xx"><img src="../images/logoworker.png" height="50" width="50"> | WORKS</a>
+   <a href="../../!EMPLOYER/source/homeEmployer.php" class="xx"><img src="../images/logoworker.png" height="50" width="50"> | WORKS</a>
    <nav class="navbar navbar-expand-md">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navigation">
          <span class="navbar-toggler-icon custom-hamburger"></span>
@@ -82,10 +82,48 @@ $numrows = mysqli_num_rows($res);
                   </div>
                   <div class="dropdown-divider"></div>
                   <!-- Other navigation items -->
-                  <a class="dropdown-item" href="#home">HOME</a>
+                  <a class="dropdown-item" href="../../!EMPLOYER/source/homeEmployer.php">HOME</a>
                   <a class="dropdown-item" href="workerlist.php">WORKERS</a>
-                  <a class="dropdown-item" href="#about">ABOUT US</a>
-                  <a class="dropdown-item" href="#contact">INQUIRIES</a>
+                  <a class="dropdown-item" href="../../!EMPLOYER/source/homeEmployer.php#about">ABOUT US</a>
+                  <a class="dropdown-item" href="../../!EMPLOYER/source/homeEmployer.php#contact">INQUIRIES</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="../../!SIGNUP/source/logout.php"><i class="bi bi-box-arrow-left pe-3 fs-4" id="logouticon"></i>LOGOUT</a>
+               </div>
+            </li>
+         </ul>
+      </div>
+   </nav>
+</header>
+
+<!-- header section ends -->
+<body>
+
+<!-- header section starts  -->
+
+<header>
+   <a href="../../!EMPLOYER/source/homeEmployer.php" class="xx"><img src="../images/logoworker.png" height="50" width="50"> | WORKS</a>
+   <nav class="navbar navbar-expand-md">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navigation">
+         <span class="navbar-toggler-icon custom-hamburger"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="main-navigation">
+         <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+               <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-bars"></i>
+               </a>
+               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <!-- Profile section at the top -->
+                  <div class="dropdown-item profile-section">
+                     <img src="<?php echo $profile_photo_path; ?>" alt="Profile Photo" class="profile-photo">
+                     <a href="profileEmployer.php">PROFILE</a>
+                  </div>
+                  <div class="dropdown-divider"></div>
+                  <!-- Other navigation items -->
+                  <a class="dropdown-item" href="../../!EMPLOYER/source/homeEmployer.php">HOME</a>
+                  <a class="dropdown-item" href="workerlist.php">WORKERS</a>
+                  <a class="dropdown-item" href="../../!EMPLOYER/source/homeEmployer.php#about">ABOUT US</a>
+                  <a class="dropdown-item" href="../../!EMPLOYER/source/homeEmployer.php#contact">INQUIRIES</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="../../!SIGNUP/source/logout.php"><i class="bi bi-box-arrow-left pe-3 fs-4" id="logouticon"></i>LOGOUT</a>
                </div>
@@ -108,26 +146,24 @@ $numrows = mysqli_num_rows($res);
 <div class="worker-section">
   <div class="worker-header">AVAILABLE WORKERS (<?php echo $workerCount; ?>)</div>
   <div class="worker-container">
-    <?php
-      while ($worker = mysqli_fetch_assoc($res)) {
-        echo '
-        <div class="worker-card">
-          <img src="../../!SIGNUP/uploads/' . $worker['profimg'] . '" class="card-img-top" alt="Worker Photo">
-
+  <?php
+   while ($worker = mysqli_fetch_assoc($res)) {
+      echo '
+         <div class="worker-card">
+            <img src="../../!SIGNUP/uploads/' . $worker['profimg'] . '" class="card-img-top" alt="Worker Photo">
             <div class="worker-details">
-              <h5>' . $worker['firstname'] . ' ' . $worker['middlename'] . ' ' . $worker['lastname'] . '</h5>
-              <a>Specialty: ' . $worker['specialty'] . '</a>
+                  <h5>' . $worker['firstname'] . ' ' . $worker['middlename'] . ' ' . $worker['lastname'] . '</h5>
+                  <a>Specialty: ' . $worker['specialty'] . '</a>
             </div>
-
             <div class="buttons">
-              <a href="' . $worker['hire_link'] . '" class="hire">Hire</a>
-              <a href="' . $worker['message_link'] . '" class="message">Message</a>
-              <a href="workerProfile.php?id=' . $worker['id'] . '" class="profile">Profile</a>
+                  <a href="workerHire.php?id=' . $worker['id'] . '" class="hire">Hire</a>
+                  <a href="' . $worker['message_link'] . '" class="message">Message</a>
+                  <a href="workerProfile.php?id=' . $worker['id'] . '" class="profile">Profile</a>
             </div>
-        </div>
-        ';
+         </div>
+         ';
       }
-    ?>
+   ?>
   </div>
 </div>
 <!-- home section ends -->

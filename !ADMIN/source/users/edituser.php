@@ -389,7 +389,7 @@
 
                                     <option value = "worker"  style="color:black;">Worker</option>
 
-                                    <option value = "worker"  style="color:black;">Admin</option>
+                                    <option value = "admin"  style="color:black;">Admin</option>
 
                                 </select>
 

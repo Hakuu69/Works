@@ -6,7 +6,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['id'])) {
     $user_id = $_SESSION['id'];
     $contact = $_POST['contact'];
     $id1 = $_FILES['id1']['name'];
-    $id2 = $_FILES['id2']['name'];
     $profimg = $_FILES['profimg']['name'];
     
     // Directory where files will be uploaded
@@ -15,9 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['id'])) {
     // Move uploaded files to target directory
     if($id1) {
         move_uploaded_file($_FILES['id1']['tmp_name'], $target_dir . $id1);
-    }
-    if($id2) {
-        move_uploaded_file($_FILES['id2']['tmp_name'], $target_dir . $id2);
     }
     if($profimg) {
         move_uploaded_file($_FILES['profimg']['tmp_name'], $target_dir . $profimg);
@@ -28,9 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['id'])) {
     
     if ($id1) {
         $query .= ", id1 = '$id1'";
-    }
-    if ($id2) {
-        $query .= ", id2 = '$id2'";
     }
     if ($profimg) {
         $query .= ", profimg = '$profimg'";

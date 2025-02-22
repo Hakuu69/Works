@@ -53,100 +53,84 @@ $ (function() {
     // Function to fetch user information
 
     function fetchprod() {
-
         var user = $("#selectedEdit").val();
-
         $("#updateuser").prop('disabled', false);
-
         $("#deleteuser").prop('disabled', false);
-
-
-
+    
         $.ajax({
-
             url: 'fetch.php',
-
             method: 'POST',
-
-            data: {
-
-                email: user
-
-            },
-
+            data: { email: user },
             dataType: 'JSON',
-
             success: function(data) {
-
-                $("#fname").val(data.firstname);
-
-                $("#mname").val(data.middlename);
-
-                $("#lname").val(data.lastname);
-
-                $("#bdate").val(data.birthdate);
-
-                $("#email").val(data.email);
-
-                $("#contact").val(data.contact);
-
-                $("#password").val(data.password);
-
-                $("#role").val(data.role).change();
-
-                $("#useruploaded").attr('src', data.image);
-
+                if (data.error) {
+                    console.error("Error: " + data.error);
+                } else {
+                    $("#fname").val(data.firstname);
+                    $("#mname").val(data.middlename);
+                    $("#lname").val(data.lastname);
+                    $("#bdate").val(data.birthdate);
+                    $("#email").val(data.email);
+                    $("#contact").val(data.contact);
+                    $("#password").val(data.password);
+                    $("#role").val(data.role).change();
+                    // Ensure image is properly set
+                    if (data.image) {
+                        $("#useruploaded").attr('src', data.image);
+                    } else {
+                        $("#useruploaded").attr('src', '/Works/!SIGNUP/uploads/default/image.png'); // Default image path
+                    }
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error: " + error);
+                console.log(xhr.responseText);
             }
+        });
+    }
+    
 
-        })
-
-    };
+    
 
 
 
     // Behavior when form is submitted
 
-    $("#user").on('submit', function() {
-
-
-
-        var formData = new FormData(this);
-
-        var user = $("#selectedEdit").val();
-
-        formData.append("user", user);
-
-
-
-        $.ajax({
-
-            url: 'update.php',
-
-            type: 'POST',
-
-            data: formData,
-
-            success: function() {
-
-                alert("User information successfully updated.");
-
-            },
-
-            cache: false,
-
-            contentType: false,
-
-            processData: false
-
+    $(function() {
+        $("#user").on('submit', function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            var user = $("#selectedEdit").val();
+            formData.append("user", user);
+    
+            $.ajax({
+                url: 'update.php',
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    alert(response.success ? response.success : "User information successfully updated.");
+                    console.log(response);
+                    // Reload the image if updated
+                    fetchprod();
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error: " + error);
+                    console.log(xhr.responseText);
+                }
+            });
         });
-
     });
+    
 
 
 
     // Behavior when delete button is clicked
 
-    $("#deleteuser").on('click', function() {
+    $("#deleteuser").on('click', function(e) {
 
         
 
@@ -190,9 +174,13 @@ $ (function() {
 
                 window.location.href = "edituser.php";
 
+            },
+
+            error: function(xhr, status, error) {
+                console.error("Error: " + error);
             }
 
-        })
+        });
 
     }
 
