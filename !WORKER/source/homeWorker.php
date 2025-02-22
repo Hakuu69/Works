@@ -22,7 +22,9 @@ if (isset($_SESSION['id'])) {
     // Handle case where user_id is not set
     $profile_photo_path = '../../!SIGNUP/images/profilePhoto.png';
 }
-?> 
+?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,12 +33,12 @@ if (isset($_SESSION['id'])) {
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+		
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLa+naA4r59gqGU6EGGJnJXn/tWtIaxVXMxm0" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-		<title>WORKS | We find works</title>
+        <title>WORKS | We find works</title>
 		<link rel = "icon" href = "../images/logo.png">
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1"> 
@@ -47,8 +49,8 @@ if (isset($_SESSION['id'])) {
 
 <!-- header section starts  -->
 
-<header>
-        <a href="#home" class="xx"><img src="../images/logoworker.png" height="50" width="50"> | WORKS</a>
+    <header>
+        <a href="../../!WORKER/source/homeWorker.php#home" class="xx"><img src="../images/logoworker.png" height="50" width="50"> | WORKS</a>
         <nav class="navbar navbar-expand-md">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navigation">
                 <span class="navbar-toggler-icon custom-hamburger"></span>
@@ -68,7 +70,7 @@ if (isset($_SESSION['id'])) {
                             <div class="dropdown-divider"></div>
                             <!-- Other navigation items -->
                             <a class="dropdown-item" href="#home">HOME</a>
-                            <a class="dropdown-item" href="workerlist.php">WORKERS</a>
+                            <a class="dropdown-item" href="employerlist.php">EMPLOYERS</a>
                             <a class="dropdown-item" href="#about">ABOUT US</a>
                             <a class="dropdown-item" href="#contact">INQUIRIES</a>
                             <div class="dropdown-divider"></div>
@@ -80,6 +82,7 @@ if (isset($_SESSION['id'])) {
         </nav>
     </header>
 
+
 <!-- header section ends -->
 
 <!-- home section starts  -->
@@ -87,7 +90,7 @@ if (isset($_SESSION['id'])) {
     <div class="content">
         <h3><b style="color:white"></b></h3>
         <h5><i style="color:white"></i></h5>
-        <a href="../source/workerlist.php" class="btn">Find a Client</a>
+        <a href="website/employerlist.php" class="btn">Find an Employer</a>
     </div>
 </section>
 <br>
@@ -128,18 +131,18 @@ if (isset($_SESSION['id'])) {
 
                 <div class="row">
                     <div class="col-md-4 text-center featured">
-                    <img src="../images/logoworker.png" width="" height="270" alt="">
+                        <img src="../images/logo.png" width="" height="270" alt="">
                         <br><br>
                             <h5>Carl Patrick Mallari - <strong>Member</strong></h5>
                         <br>
                           <p style="font-size: 11px; color:black;">3rd Year at AMA Computer College</p>
                         
-                          
+                    
                         <br><br>
                     </div>
 
                     <div class="col-md-4 text-center featured">
-                    <img src="../images/logoworker.png" width="" height="270" alt="">
+                        <img src="../images/logo.png" width="" height="270" alt="">
                         <br><br>
                             <h5>Jacob Salvador - <strong>Member</strong></h5>
                         <br>
@@ -150,7 +153,7 @@ if (isset($_SESSION['id'])) {
                     </div>
 
                     <div class="col-md-4 text-center featured">
-                        <img src="../images/logoworker.png" width="" height="270" alt="">
+                        <img src="../images/logo.png" width="" height="270" alt="">
                         <br><br>
                             <h5>Yvan Balinan - <strong>Member</strong></h5>
                         
@@ -167,7 +170,7 @@ if (isset($_SESSION['id'])) {
 <!-- contact section starts  -->
 <section class="contact" id="contact">
 
-    <h1 class="heading" style="font-weight: bold;">CONTACT US</h1>
+    <h1 class="heading" style="font-weight: bold;">SENDS US A MESSAGE</h1>
 
     <div class="row">
 
@@ -209,9 +212,6 @@ if (isset($_SESSION['id'])) {
                     </p>
                 </div>
                 <div class = "col-lg-3 col-md-3 col-sm-12 vstack">
-                   
-
-                  
                 </div>
                 <div class = "col-lg-3 col-md-3 col-sm-12">
                     <h5 class = "fs-6 fw-semibold">HEAR NEWS FROM US</h5>

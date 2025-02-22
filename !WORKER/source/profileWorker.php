@@ -14,6 +14,10 @@ if (isset($_SESSION['id'])) {
         $row = mysqli_fetch_assoc($result);
         $profile_photo = $row['profimg'];
         $profile_photo_path = '../../!SIGNUP/uploads/' . $profile_photo;
+
+
+        // Fetch and split the specialty into an array
+        $specialty = explode(',', $row['specialty']);
     } else {
         echo "User not found";
         exit;
@@ -43,38 +47,41 @@ if (isset($_SESSION['id'])) {
 <body class="profile-background">
 
 <!-- header section starts  -->
+
 <header>
-    <a href="../../!WORKER/source/homeWorker.php" class="xx"><img src="../images/logoworker.png" height="50" width="50"> | WORKS</a>
-    <nav class="navbar navbar-expand-md">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navigation">
-            <span class="navbar-toggler-icon custom-hamburger"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="main-navigation">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-bars"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <!-- Profile section at the top -->
-                        <div class="dropdown-item profile-section">
-                            <img src="<?php echo $profile_photo_path; ?>" alt="Profile Photo" class="profile-photo">
-                            <a href="profileEmployer.php">PROFILE</a>
+        <a href="../../!WORKER/source/homeWorker.php#home" class="xx"><img src="../images/logoworker.png" height="50" width="50"> | WORKS</a>
+        <nav class="navbar navbar-expand-md">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navigation">
+                <span class="navbar-toggler-icon custom-hamburger"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="main-navigation">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-bars"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <!-- Profile section at the top -->
+                            <div class="dropdown-item profile-section">
+                                <img src="<?php echo $profile_photo_path; ?>" alt="Profile Photo" class="profile-photo">
+                                <a href="profileWorker.php">PROFILE</a>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <!-- Other navigation items -->
+                            <a class="dropdown-item" href="#home">HOME</a>
+                            <a class="dropdown-item" href="employerlist.php">EMPLOYERS</a>
+                            <a class="dropdown-item" href="#about">ABOUT US</a>
+                            <a class="dropdown-item" href="#contact">INQUIRIES</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="../../!SIGNUP/source/logout.php"><i class="bi bi-box-arrow-left pe-3 fs-4" id="logouticon"></i>LOGOUT</a>
                         </div>
-                        <div class="dropdown-divider"></div>
-                        <!-- Other navigation items -->
-                        <a class="dropdown-item" href="../../!EMPLOYER/source/homeEmployer.php">HOME</a>
-                        <a class="dropdown-item" href="workerlist.php">WORKERS</a>
-                        <a class="dropdown-item" href="../../!EMPLOYER/source/homeEmployer.php#about">ABOUT US</a>
-                        <a class="dropdown-item" href="../../!EMPLOYER/source/homeEmployer.php#contact">INQUIRIES</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="../../!SIGNUP/source/logout.php"><i class="bi bi-box-arrow-left pe-3 fs-4" id="logouticon"></i>LOGOUT</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+
 <!-- header section ends -->
 
 <!-- home section starts  -->
@@ -121,8 +128,19 @@ if (isset($_SESSION['id'])) {
             <input type="text" class="form-control" id="contact" name="contact" value="<?php echo $row['contact']; ?>">
         </div>
         <div class="form-group">
-            <label for="id1">ID 1</label>
-            <input type="file" class="form-control" id="id1" name="id1" accept="image/*">
+            <label for="specialty">Specialty</label><br>
+            <input type="checkbox" id="welder" name="specialty[]" value="Welder" <?php if(in_array('Welder', $specialty)) echo 'checked'; ?>>
+            <label for="welder">Welder</label><br>
+            <input type="checkbox" id="mechanic" name="specialty[]" value="Mechanic" <?php if(in_array('Mechanic', $specialty)) echo 'checked'; ?>>
+            <label for="mechanic">Mechanic</label><br>
+            <input type="checkbox" id="electrician" name="specialty[]" value="Electrician" <?php if(in_array('Electrician', $specialty)) echo 'checked'; ?>>
+            <label for="electrician">Electrician</label><br>
+            <input type="checkbox" id="construction" name="specialty[]" value="Construction Worker" <?php if(in_array('Construction Worker', $specialty)) echo 'checked'; ?>>
+            <label for="construction">Contstruction Worker</label><br>
+        </div>
+        <div class="form-group">
+            <label for="resume">Resume</label>
+            <input type="file" class="form-control" id="resume" name="resume" accept="image/*">
         </div>
         <!-- Add other editable fields here -->
         <button type="submit" class="btn btn-primary">Update Profile</button>

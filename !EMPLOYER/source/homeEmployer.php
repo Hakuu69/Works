@@ -50,7 +50,7 @@ if (isset($_SESSION['id'])) {
 <!-- header section starts  -->
 
     <header>
-        <a href="#home" class="xx"><img src="../images/logoworker.png" height="50" width="50"> | WORKS</a>
+        <a href="../../!EMPLOYER/source/homeEmployer.php#home" class="xx"><img src="../images/logoworker.png" height="50" width="50"> | WORKS</a>
         <nav class="navbar navbar-expand-md">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navigation">
                 <span class="navbar-toggler-icon custom-hamburger"></span>
