@@ -34,10 +34,10 @@
         <a class="nav-link" href="#contact">INQUIRIES</a>
       </li>
       <li class = "nav-item" id = "login"> 
-            <a class = "nav-link fw-bold fs-6" href = "../Works/!SIGNUP/source/login.php"></i>LOGIN</a>
+            <a class = "nav-link fw-bold fs-6" href = "./!SIGNUP/source/login.php"></i>LOGIN</a>
         </li>
         <li class = "nav-item" id = "register"> 
-            <a class = "nav-link fw-bold fs-6" href = "pre-reg.php"></i>REGISTER</a>
+            <a class = "nav-link fw-bold fs-6" href = "./pre-reg.php"></i>REGISTER</a>
         </li>
     </ul>
         </div>
@@ -53,7 +53,7 @@
     <div class="content">
         <h3><b style="color:white"></b></h3>
         <h5><i style="color:white"></i></h5>
-        <a href="../Works/employerlist.php" class="btn">Find a Client</a>
+        <a href="./pre-reg.php" class="btn">Start Now</a>
     </div>
 </section>
 <br>

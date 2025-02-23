@@ -18,7 +18,14 @@ if (!isset($_SESSION['id'])) {
         #container { display: flex; height: 100vh; }
         #conversations { width: 30%; border-right: 1px solid #ccc; padding: 10px; overflow-y: auto; }
         #chat { width: 70%; display: flex; flex-direction: column; padding: 10px; }
-        #chatHeader { margin: 0; padding: 10px 0; border-bottom: 1px solid #ccc; display: flex; align-items: center; }
+        #chatHeader { 
+            margin: 0; 
+            padding: 10px 0; 
+            border-bottom: 1px solid #ccc; 
+            display: flex; 
+            align-items: center; 
+            position: relative;
+        }
         #chatHeader img { border-radius: 50%; margin-right: 10px; }
         #chatMessages { flex: 1; overflow-y: auto; padding: 10px; border-bottom: 1px solid #ccc; }
         #chatInput { display: flex; }
@@ -54,6 +61,33 @@ if (!isset($_SESSION['id'])) {
         }
         .conv-name { font-weight: bold; }
         .conv-preview { font-size: 0.9em; color: #555; }
+
+        /* Chat header drop-down styling */
+        #chatOptions {
+            margin-left: auto;
+            cursor: pointer;
+            font-size: 24px;
+        }
+        #chatDropdown {
+            display: none;
+            position: absolute;
+            right: 10px;
+            top: 60px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+        #chatDropdown a {
+            display: block;
+            padding: 5px;
+            text-decoration: none;
+            color: #333;
+        }
+        #chatDropdown a:hover {
+            background-color: #f0f0f0;
+        }
     </style>
 </head>
 <body>
@@ -72,6 +106,10 @@ if (!isset($_SESSION['id'])) {
     <!-- Right panel: Chat window -->
     <div id="chat">
         <h3 id="chatHeader">Select a conversation</h3>
+        <!-- Chat dropdown for options -->
+        <div id="chatDropdown">
+            <a href="#" id="deleteChat">Delete Chat</a>
+        </div>
         <div id="chatMessages">
             <!-- Chat messages will be loaded via AJAX -->
         </div>
@@ -95,6 +133,46 @@ $(document).ready(function() {
             ? '/Works/!SIGNUP/uploads/' + profimg 
             : '/Works/!SIGNUP/uploads/default/image.png';
     }
+    
+    // Toggle drop-down when the options button is clicked
+    $(document).on('click', '#chatOptions', function(e) {
+        e.stopPropagation();
+        $('#chatDropdown').toggle();
+    });
+    // Hide drop-down if clicking outside
+    $(document).click(function() {
+        $('#chatDropdown').hide();
+    });
+    
+    // Delete Chat handler
+    $(document).on('click', '#deleteChat', function(e) {
+        e.preventDefault();
+        if(currentChatPartner) {
+            if(confirm("Are you sure you want to delete this conversation?")) {
+                $.ajax({
+                    url: 'delete_chat.php',
+                    method: 'POST',
+                    data: { other_user_id: currentChatPartner },
+                    dataType: 'json',
+                    success: function(response) {
+                        if(response.status === 'success') {
+                            alert("Conversation deleted.");
+                            $('#chatHeader').html('Select a conversation');
+                            $('#chatMessages').html('');
+                            currentChatPartner = null;
+                            loadConversations();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+        }
+        $('#chatDropdown').hide();
+    });
     
     // Load conversation list via AJAX
     function loadConversations() {
@@ -184,7 +262,8 @@ $(document).ready(function() {
         var fullname = $(this).data('fullname');
         var profimg = $(this).data('img');
         var imageSrc = getImageSrc(profimg);
-        $('#chatHeader').html('<img src="'+imageSrc+'" alt="Profile Image" width="50" height="50"> ' + fullname);
+        // Build chat header with image, name, and three-dot options button
+        $('#chatHeader').html('<div style="display:flex; align-items:center; width:100%;"><img src="'+imageSrc+'" alt="Profile Image" width="50" height="50"> <span style="margin-left:10px;">' + fullname + '</span><span id="chatOptions">&#8942;</span></div>');
         loadChat(currentChatPartner);
         markConversationAsRead(currentChatPartner);
     });
@@ -232,7 +311,7 @@ $(document).ready(function() {
               if(response.status === 'success'){
                   currentChatPartner = response.chat_partner;
                   var imageSrc = getImageSrc(response.profimg);
-                  $('#chatHeader').html('<img src="'+imageSrc+'" alt="Profile Image" width="50" height="50"> ' + response.name);
+                  $('#chatHeader').html('<div style="display:flex; align-items:center; width:100%;"><img src="'+imageSrc+'" alt="Profile Image" width="50" height="50"> <span style="margin-left:10px;">' + response.name + '</span><span id="chatOptions" style="margin-left:auto; cursor:pointer; font-size:24px;">&#8942;</span></div>');
                   loadChat(currentChatPartner);
                   loadConversations();
               } else {
@@ -257,7 +336,7 @@ $(document).ready(function() {
                     var user = response.user;
                     currentChatPartner = user.id;
                     var imageSrc = getImageSrc(user.profimg);
-                    $('#chatHeader').html('<img src="'+imageSrc+'" alt="Profile Image" width="50" height="50"> ' + user.firstname + ' ' + user.lastname);
+                    $('#chatHeader').html('<div style="display:flex; align-items:center; width:100%;"><img src="'+imageSrc+'" alt="Profile Image" width="50" height="50"> <span style="margin-left:10px;">' + user.firstname + ' ' + user.lastname + '</span><span id="chatOptions" style="margin-left:auto; cursor:pointer; font-size:24px;">&#8942;</span></div>');
                     loadChat(currentChatPartner);
                 } else {
                     console.error(response.message);
