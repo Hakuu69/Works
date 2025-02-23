@@ -16,8 +16,10 @@ if (!isset($_SESSION['id'])) {
         /* Overall layout */
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
         #container { display: flex; height: 100vh; }
-        #conversations { width: 30%; border-right: 1px solid #ccc; padding: 10px; overflow-y: auto; }
-        #chat { width: 70%; display: flex; flex-direction: column; padding: 10px; }
+        #conversations { width: 20%; border-right: 1px solid #ccc; padding: 10px; overflow-y: auto; }
+        #chat { width: 80%; display: flex; flex-direction: column; padding: 10px; }
+        
+        /* Chat header with profile image */
         #chatHeader { 
             margin: 0; 
             padding: 10px 0; 
@@ -26,11 +28,52 @@ if (!isset($_SESSION['id'])) {
             align-items: center; 
             position: relative;
         }
-        #chatHeader img { border-radius: 50%; margin-right: 10px; }
-        #chatMessages { flex: 1; overflow-y: auto; padding: 10px; border-bottom: 1px solid #ccc; }
+        /* Chat header dropdown */
+        #chatOptions {
+            cursor: pointer;
+            font-size: 24px;
+        }
+        #chatDropdown {
+            display: none;
+            position: absolute;
+            right: 10px;
+            top: 60px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+        #chatDropdown a {
+            display: block;
+            padding: 5px;
+            text-decoration: none;
+            color: #333;
+        }
+        #chatDropdown a:hover { background-color: #f0f0f0; }
+
+        #chatMessages { 
+            flex: 1; 
+            overflow-y: auto; 
+            padding: 10px; 
+            border-bottom: 1px solid #ccc;
+            word-break: break-all;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+        /* Chat input area uses a textarea that auto-expands */
         #chatInput { display: flex; }
-        #chatInput input { flex: 1; padding: 10px; font-size: 16px; }
-        #chatInput button { padding: 10px 20px; font-size: 16px; }
+        #chatInput textarea {
+            flex: 1; 
+            padding: 5px;  
+            font-size: 16px; 
+            resize: none;
+            min-height: 30px;  
+            max-height: 100px; 
+            overflow-y: auto;
+        }
+        #chatInput button { padding: 8px 16px; font-size: 16px; }  /* slightly reduced padding */
+
 
         /* New conversation creation */
         #newConversation { padding: 10px; margin-bottom: 10px; border-bottom: 1px solid #ccc; }
@@ -60,33 +103,49 @@ if (!isset($_SESSION['id'])) {
             justify-content: center;
         }
         .conv-name { font-weight: bold; }
-        .conv-preview { font-size: 0.9em; color: #555; }
+        .conv-preview { 
+            font-size: 0.9em; 
+            color: #555; 
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 180px;
+        }
 
-        /* Chat header drop-down styling */
-        #chatOptions {
-            margin-left: auto;
-            cursor: pointer;
-            font-size: 24px;
+        /* Chat message item styling */
+        .messageItem {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
         }
-        #chatDropdown {
-            display: none;
-            position: absolute;
-            right: 10px;
-            top: 60px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            z-index: 10;
+        .msg-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
         }
-        #chatDropdown a {
-            display: block;
-            padding: 5px;
-            text-decoration: none;
+        .msg-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .msg-header {
+            font-size: 0.9em;
             color: #333;
         }
-        #chatDropdown a:hover {
-            background-color: #f0f0f0;
+        .msg-sender {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .msg-time {
+            font-size: 0.8em;
+            color: #888;
+        }
+        .msg-content {
+            margin-top: 2px;
+            word-break: break-all;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
         }
     </style>
 </head>
@@ -114,7 +173,7 @@ if (!isset($_SESSION['id'])) {
             <!-- Chat messages will be loaded via AJAX -->
         </div>
         <div id="chatInput">
-            <input type="text" id="messageInput" placeholder="Type a message...">
+            <textarea id="messageInput" placeholder="Type a message..."></textarea>
             <button id="sendBtn">Send</button>
         </div>
     </div>
@@ -134,12 +193,17 @@ $(document).ready(function() {
             : '/Works/!SIGNUP/uploads/default/image.png';
     }
     
-    // Toggle drop-down when the options button is clicked
+    // Auto-expand the chat input textarea
+    $('#messageInput').on('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    });
+    
+    // Toggle drop-down when options button is clicked
     $(document).on('click', '#chatOptions', function(e) {
         e.stopPropagation();
         $('#chatDropdown').toggle();
     });
-    // Hide drop-down if clicking outside
     $(document).click(function() {
         $('#chatDropdown').hide();
     });
@@ -225,7 +289,16 @@ $(document).ready(function() {
                     var messagesHtml = '';
                     $.each(response.messages, function(index, message) {
                         var sender = (message.sender_id == <?php echo $_SESSION['id']; ?>) ? 'You' : message.sender_firstname;
-                        messagesHtml += '<div><strong>' + sender + ':</strong> ' + message.message + '</div>';
+                        var senderImg = getImageSrc(message.sender_profimg);
+                        // Extract time from sent_at (format "YYYY-MM-DD HH:MM:SS")
+                        var timeStr = message.sent_at.substring(11,16);
+                        messagesHtml += '<div class="messageItem">' +
+                                            '<img class="msg-img" src="' + senderImg + '" alt="Sender Image">' +
+                                            '<div class="msg-text">' +
+                                                '<div class="msg-header"><span class="msg-sender">' + sender + '</span><span class="msg-time">' + timeStr + '</span></div>' +
+                                                '<div class="msg-content">' + message.message + '</div>' +
+                                            '</div>' +
+                                        '</div>';
                     });
                     $('#chatMessages').html(messagesHtml);
                     $('#chatMessages').scrollTop($('#chatMessages')[0].scrollHeight);
@@ -262,8 +335,12 @@ $(document).ready(function() {
         var fullname = $(this).data('fullname');
         var profimg = $(this).data('img');
         var imageSrc = getImageSrc(profimg);
-        // Build chat header with image, name, and three-dot options button
-        $('#chatHeader').html('<div style="display:flex; align-items:center; width:100%;"><img src="'+imageSrc+'" alt="Profile Image" width="50" height="50"> <span style="margin-left:10px;">' + fullname + '</span><span id="chatOptions">&#8942;</span></div>');
+        // Build chat header with circular profile image, name, and three-dot options button
+        $('#chatHeader').html('<div style="width:100%; display:flex; align-items:center;">' +
+                              '<img src="'+imageSrc+'" alt="Profile Image" width="50" height="50" style="margin-right:10px; border-radius:50%;">' +
+                              '<span>' + fullname + '</span>' +
+                              '<span id="chatOptions" style="margin-left:auto; cursor:pointer; font-size:24px;">&#8942;</span>' +
+                              '</div>');
         loadChat(currentChatPartner);
         markConversationAsRead(currentChatPartner);
     });
@@ -311,7 +388,11 @@ $(document).ready(function() {
               if(response.status === 'success'){
                   currentChatPartner = response.chat_partner;
                   var imageSrc = getImageSrc(response.profimg);
-                  $('#chatHeader').html('<div style="display:flex; align-items:center; width:100%;"><img src="'+imageSrc+'" alt="Profile Image" width="50" height="50"> <span style="margin-left:10px;">' + response.name + '</span><span id="chatOptions" style="margin-left:auto; cursor:pointer; font-size:24px;">&#8942;</span></div>');
+                  $('#chatHeader').html('<div style="width:100%; display:flex; align-items:center;">' +
+                                          '<img src="'+imageSrc+'" alt="Profile Image" width="50" height="50" style="margin-right:10px; border-radius:50%;">' +
+                                          '<span>' + response.name + '</span>' +
+                                          '<span id="chatOptions" style="margin-left:auto; cursor:pointer; font-size:24px;">&#8942;</span>' +
+                                          '</div>');
                   loadChat(currentChatPartner);
                   loadConversations();
               } else {
@@ -336,7 +417,11 @@ $(document).ready(function() {
                     var user = response.user;
                     currentChatPartner = user.id;
                     var imageSrc = getImageSrc(user.profimg);
-                    $('#chatHeader').html('<div style="display:flex; align-items:center; width:100%;"><img src="'+imageSrc+'" alt="Profile Image" width="50" height="50"> <span style="margin-left:10px;">' + user.firstname + ' ' + user.lastname + '</span><span id="chatOptions" style="margin-left:auto; cursor:pointer; font-size:24px;">&#8942;</span></div>');
+                    $('#chatHeader').html('<div style="width:100%; display:flex; align-items:center;">' +
+                                          '<img src="'+imageSrc+'" alt="Profile Image" width="50" height="50" style="margin-right:10px; border-radius:50%;">' +
+                                          '<span>' + user.firstname + ' ' + user.lastname + '</span>' +
+                                          '<span id="chatOptions" style="margin-left:auto; cursor:pointer; font-size:24px;">&#8942;</span>' +
+                                          '</div>');
                     loadChat(currentChatPartner);
                 } else {
                     console.error(response.message);
