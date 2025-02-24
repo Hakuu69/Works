@@ -425,25 +425,66 @@ destination .card-text p {
 .profile-section {
     display: flex;
     align-items: center;
-}
-
-.profile-photo {
-    width: 40px; /* Set the width of the profile photo */
-    height: 40px; /* Set the height of the profile photo */
-    border-radius: 50%; /* Make it circular */
-    margin-right: 10px; /* Add some margin to the right */
-}
-
-/* PROFILE SECTION*/
-.profile-background{
-    color: #00c0fa;
-    background-color: #79e0ff;
-}
-
-.profile-header{
-    text-align: center;
+    justify-content: flex-start;
+    width: 80%;
+    max-width: 1000px;
+    margin: 50px auto;
+    background: #f0f5ff; /* Light pastel blue (soft and professional) */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    gap: 30px;
+  }
+  
+  /* Profile Image */
+  .profile-section img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #0056b3;
+    background: white; /* White behind image */
+    padding: 5px; /* Adds spacing around image */
+  }
+  
+  /* Worker Info */
+  .profile-section h4 {
+    font-size: 26px;
     font-weight: bold;
-}
+    color: #0056b3;
+    margin-bottom: 10px;
+  }
+  
+  .profile-section a {
+    display: block;
+    font-size: 18px;
+    color: #333; /* Dark gray for better contrast */
+    margin-bottom: 5px;
+    text-decoration: none;
+  }
+  
+  .profile-section a strong {
+    font-weight: bold;
+  }
+  
+  /* Hire Button */
+  .hire-button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 24px;
+    background: #98be9a;
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: 0.3s ease;
+    text-decoration: none;
+  }
+  
+  .hire-button:hover {
+    background: #e3effc;
+  }
+  
 
 /* WORKER SECTION */
 .worker-section { 
@@ -460,9 +501,9 @@ destination .card-text p {
     font-size: 20px; 
 }
 .worker-container {
+    justify-self: center
     width: 100%;
-    max-width: 800px;
-    margin: 20px;
+    padding: 50px;
 }
 .worker-card {
     display: flex;
@@ -531,7 +572,7 @@ destination .card-text p {
         position:absolute;
         top:100%; left:0; right:0;
         background:#eeeeee;
-        border-top: .1rem solid rgba(0,0,0,.1);
+        border-top: .1rem solid rgba(255, 188, 44, 0.1);
         clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
     }
     header #toggler:checked ~ .navbar{
@@ -566,3 +607,10 @@ destination .card-text p {
         font-size: 3rem;
     }
 }
+
+/*worker profile */
+
+
+
+    
+

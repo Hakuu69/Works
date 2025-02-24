@@ -174,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <a>Specialty: <?php echo $worker['specialty']; ?></a>
     <a>Email: <?php echo $worker['email']; ?></a>
     <a>Contact: <?php echo $worker['contact']; ?></a>
-    <a>Resume: <a href="../../!SIGNUP/uploads/<?php echo $worker['resume']; ?>" target="_blank">View Resume</a></a>
+    
     <a>Hired Status: <?php echo $worker['isHired'] ? 'Hired' : 'Not Hired'; ?></a>
 </div>
 

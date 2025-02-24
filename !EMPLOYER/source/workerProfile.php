@@ -94,6 +94,8 @@ if (isset($_GET['id'])) {
                   <div class="dropdown-divider"></div>
                   <!-- Other navigation items -->
                   <a class="dropdown-item" href="../../!EMPLOYER/source/homeEmployer.php">HOME</a>
+                
+                  
                   <a class="dropdown-item" href="../../!EMPLOYER/source/workerlist.php">WORKERS</a>
                   <a class="dropdown-item" href="../../!EMPLOYER/communication/messaging.php">MESSAGES</a>
                   <a class="dropdown-item" href="../../!EMPLOYER/source/homeEmployer.php#about">ABOUT US</a>
@@ -112,7 +114,7 @@ if (isset($_GET['id'])) {
 <!-- Profile section -->
 <br><br><br><br><br><br>
 <div class="profile-section">
-    <img src="../../!SIGNUP/uploads/<?php echo $worker['profimg']; ?>" alt="Profile Photo">
+    <img src="../../!SIGNUP/uploads/<?php echo $worker['profimg']; ?>" alt="Profile Photo" >
     <h4><?php echo $worker['firstname'] . ' ' . $worker['middlename'] . ' ' . $worker['lastname']; ?></h4>
     <a>Specialty: <?php echo $worker['specialty']; ?></a>
     <a>Email: <?php echo $worker['email']; ?></a>
