@@ -427,10 +427,10 @@ destination .card-text p {
     align-items: center;
     justify-content: flex-start;
     width: 80%;
-    max-width: 1000px;
+    max-width: 1000px auto;
     margin: 50px auto;
     background: #f0f5ff; /* Light pastel blue (soft and professional) */
-    padding: 30px;
+    padding: auto;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     gap: 30px;

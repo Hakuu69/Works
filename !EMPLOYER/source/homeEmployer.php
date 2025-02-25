@@ -90,7 +90,7 @@ if (isset($_SESSION['id'])) {
     <div class="content">
         <h3><b style="color:white"></b></h3>
         <h5><i style="color:white"></i></h5>
-        <a href="website/workerlist.php" class="btn">Find a Worker</a>
+        <a href="../source/workerlist.php" class="btn">Find a Worker</a>
     </div>
 </section>
 <br>
