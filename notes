@@ -1,48 +1,18 @@
-Databases
-- client account
-Profile Picture    //profimg
-First Name          
-Middle name
-Last Name
-Birthdate (18+)
-Contact Number
-Email Adddress
-Username
-Password
-Valid ID
 
-- worker account
-Profile Picture
-First Name
-Middle name
-Last Name
-Birthdate (18+)
-Contact Number
-Email Adddress
-Username
-Password
-Resume
-
-
-need to add:
-reconfirm password
+rework:
 textbar login/register color
-update Obra to works
-Logo
-resume format for workers to fill
-ui's for worker client and admin
+pre-reg.php - make the "EMPLOYER" and "WORKER" in bold text weight
 
-
-soon to add - haku:
-validation for login / registration
-test noteete
-
-
-haku's:
-clean profimg image forwarding
-
+Optional to improve:
+First letter in First name, Middle name, and last name should be capitalized
+password should be like 8+ char, have a specialized character, numbers and so on for better security
+validation for account creation on admin side
+testlist.php can now be removed
 
 AI POWERED CV RECOGNITION AND ID RECOGNITION
-
 https://www.youtube.com/watch?v=9dT_g4nBmvM
 https://www.phpclasses.org/package/2874-PHP-Recognize-text-objects-in-graphical-images.html
+
+Free (F0) - Web/Container 
+5,000 free transactions per month
+20 transactions per minute

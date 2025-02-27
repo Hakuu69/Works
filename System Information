@@ -1,0 +1,192 @@
+Configuration:
+1. Download the file.
+2. Run XAMPP.
+3. Start Apache and MySQL.
+4. Press the Admin button (MySQL).
+5. Create a new database named "works" (for the first time).
+6. Select the "works" database and go to Import.
+7. Choose the file from this folder named "works.sql".
+8. Verify table structures; there should be 2 (messages and users). (3 users are already provided in the SQL: Admin, Employer, Worker).
+
+Information (Web Pages):
+<MAIN>
+
+> index.php  
+- Landing page.
+
+> pre-reg.php  
+- Pre-registration for users without an account.
+
+<ADMIN>
+
+> !ADMIN > source > dashboard.php  
+- Displays user information.  
+  - Graph of users.  
+  - Number of users.
+
+> !ADMIN > source > users > adduser.php  
+- Allows the admin to add new users.  
+- Admin can assign 3 different roles: Admin, Employer, Worker.
+
+> !ADMIN > source > users > alluser.php  
+- Displays a list of all users.
+
+> !ADMIN > source > users > edituser.php  
+- Allows the admin to edit user information.  
+- Information is automatically fetched when an email is selected.  
+- Option to remove a selected user.
+
+<EMPLOYER>
+
+> !EMPLOYER > source > homeEmployer.php  
+- Homepage for employers.
+
+> !EMPLOYER > source > profileEmployer.php  
+- Information is automatically fetched.  
+- The user can edit:  
+  - Profile image.  
+  - Contact number.  
+  - ID.
+
+> !EMPLOYER > source > workerHire.php  
+- Employers can hire workers immediately by sliding the slider.  
+- Once hired, the worker will no longer appear in workerlist.php.
+
+> !EMPLOYER > source > workerlist.php  
+- Displays a list of available workers (not yet hired).  
+- Information about workers is shown on their respective cards.  
+- 3 buttons are available to navigate to the other page with the session of that user.
+
+> !EMPLOYER > source > workerProfile.php  
+- Displays the worker's information.  
+- Employers can view the worker's resume in another tab by clicking "View Resume".
+
+<WORKER>
+
+> !WORKER > source > employerHire.php  
+- Workers can apply to a selected employer by sliding the slider.  
+- Once a worker applies to an employer, that employer will no longer appear in employerlist.php.
+
+> !WORKER > source > employerlist.php  
+- Displays a list of available employers (not yet applied to).  
+- Information about employers is shown on their respective cards.  
+- 3 buttons are available to navigate to the other page with the session of that user.
+
+> !WORKER > source > employerProfile.php  
+- Displays the employer's information.  
+- Workers can view the employer's ID in another tab by clicking "View ID" (temporary, as ID should be private).
+
+> !WORKER > source > homeWorker.php  
+- Homepage for workers.
+
+> !WORKER > source > profileWorker.php  
+- Information is automatically fetched.  
+- The user can edit:  
+  - Profile image.  
+  - Contact number.  
+  - Specialty.  
+  - Resume.
+
+<MESSAGING>
+
+> !EMPLOYER|!WORKER > communication > messaging.php  
+- AJAX-based.  
+- Updates every 5 seconds.  
+- Users can search for others by email (must be a registered email).  
+- Conversation list:  
+  - Shows profile picture and full name.  
+  - Messages are in bold if unread.  
+  - Messages are truncated with three dots if too long.
+
+- Chat:  
+  - Shows profile image and full name in the header.  
+  - Three dots in the header for chat deletion.  
+  - First name and message time displayed.
+
+<SIGNUP/LOGIN>
+
+> !SIGNUP > source > employerReg.php  
+- Registration for employers.  
+- Automated role assignment for employer.  
+- Employer must be 21 or older to proceed.  
+- Validation checks:  
+  - Contact number (must be 11 digits).  
+  - Email address (must be unique).  
+  - Password and re-entered password must match.  
+  - All fields must be filled.
+
+> !SIGNUP > source > idUpload.php  
+- Second part of registration for employers.  
+- ID must be valid (passport, driver's license, or other valid IDs).  
+- Uses AI-powered Microsoft Azure for computer vision to validate the ID image.
+
+> !SIGNUP > source > login.php  
+- Login page for users.
+
+> !SIGNUP > source > workerReg.php  
+- Registration for workers.  
+- Automated role assignment for worker.  
+- Worker must be 18 or older to proceed.  
+- Validation checks:  
+  - Contact number (must be 11 digits).  
+  - Email address (must be unique).  
+  - Password and re-entered password must match.  
+  - All fields must be filled.
+
+> !SIGNUP > source > resumeUpload.php  
+- Second part of registration for workers.  
+- Resume must be valid, containing experience, skills, and education.  
+- Uses AI-powered Microsoft Azure for computer vision to validate the resume image.
+
+<OTHER INFORMATION SCRIPTS>
+
+> index.js  
+- Used for dynamically updating content, controlling multimedia, animating images, etc.
+
+> index.css  
+- Used to define styles for web pages, including design, layout, and responsiveness.
+
+> connection.php  
+- Script for connecting to the database.
+
+> works.sql  
+- SQL script for database structure.
+
+> !ADMIN > source > users > delete.php  
+- Script for account deletion, used in edituser.php.
+
+> !ADMIN > source > users > fetch.php  
+- Script for fetching user information, used in alluser.php and edituser.php.
+
+> !ADMIN > source > users > update.php  
+- SQL script for updating user information, used in edituser.php.
+
+> !ADMIN > source > users > user.js  
+- JavaScript for AJAX-based operations.
+
+> !ADMIN > source > script.js  
+- Script for displaying time and animations in dashboard.php.
+
+> !EMPLOYER | !WORKER > communication > delete_chat.php  
+- Script for chat deletion.
+
+> !EMPLOYER | !WORKER > communication > get_messages.php  
+- Fetches messages and formats them.
+
+> !EMPLOYER | !WORKER > communication > get_user_info.php  
+- Checks if an email is registered.
+
+> !EMPLOYER | !WORKER > communication > list_chats.php  
+- Displays the chat list with the correct formatting.
+
+> !EMPLOYER | !WORKER > communication > mark_as_read.php  
+- Marks a chat as read or unread.
+
+> !EMPLOYER | !WORKER > communication > send_message.php  
+- Script for sending messages.
+
+> !EMPLOYER | !WORKER > communication > start_conversation.php  
+- Searches for a registered email to start a conversation.
+
+> !EMPLOYER | !WORKER > source > updateProfile.php  
+- Script for updating user profiles.

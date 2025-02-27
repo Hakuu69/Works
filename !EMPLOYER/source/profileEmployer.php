@@ -124,7 +124,7 @@ if (isset($_SESSION['id'])) {
             <input type="text" class="form-control" id="contact" name="contact" value="<?php echo $row['contact']; ?>">
         </div>
         <div class="form-group">
-            <label for="id1">ID 1</label>
+            <label for="id1">ID</label>
             <input type="file" class="form-control" id="id1" name="id1" accept="image/*">
         </div>
         <!-- Add other editable fields here -->

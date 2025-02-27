@@ -1,17 +1,18 @@
 <?php
 session_start();
 include "connection.php";
+include "config.php";  // Contains your CV_SUBSCRIPTION_KEY and CV_ENDPOINT
 
-// Enable error reporting
+// Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if(isset($_POST["insert"])) {
+if (isset($_POST["insert"])) {
     $email = $_SESSION['email']; // Assuming email as identifier
     $checksql = "SELECT * FROM users WHERE email = '$email'";
     $checkun = mysqli_query($conn, $checksql);
 
-    if(mysqli_num_rows($checkun) > 0) {
+    if (mysqli_num_rows($checkun) > 0) {
         header("Location: workerReg.php?error");
         exit();
     } else {
@@ -20,16 +21,117 @@ if(isset($_POST["insert"])) {
             mkdir("../uploads/", 0777, true);
         }
 
-        // File upload handling for the first ID
+        // File upload handling for resume
         $tm_resume = md5(time() . "resume");
         $fnm_resume = $_FILES["resume"]["name"];
-        $dst_resume = "./../uploads/".$tm_resume.$fnm_resume;
-        $dst_resume_db = "../uploads/".$tm_resume.$fnm_resume;
+        $dst_resume = "./../uploads/" . $tm_resume . $fnm_resume;
+        $dst_resume_db = "../uploads/" . $tm_resume . $fnm_resume;
 
         if (!move_uploaded_file($_FILES["resume"]["tmp_name"], $dst_resume)) {
-            echo "Failed to upload first ID. Error details: " . $_FILES["resume"]["error"];
+            echo "Failed to upload resume. Error details: " . $_FILES["resume"]["error"];
             exit();
         }
+
+        // --- Microsoft Cognitive Services OCR Integration for Resume Verification ---
+
+        // Read the uploaded file content
+        $imageData = file_get_contents($dst_resume);
+
+        // Function to call the Read (OCR) API
+        function callReadAPI($imageData) {
+            $url = CV_ENDPOINT . '/vision/v3.2/read/analyze';
+            $headers = [
+                "Ocp-Apim-Subscription-Key: " . CV_SUBSCRIPTION_KEY,
+                "Content-Type: application/octet-stream"
+            ];
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $imageData);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HEADER, true); // Get headers for the Operation-Location
+
+            $response = curl_exec($ch);
+            $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+            $header = substr($response, 0, $headerSize);
+            curl_close($ch);
+
+            if ($status != 202) {
+                die("OCR request failed. HTTP Status: " . $status);
+            }
+
+            // Extract Operation-Location header for polling
+            if (preg_match('/Operation-Location:\s*(.*)/i', $header, $matches)) {
+                return trim($matches[1]);
+            } else {
+                die("Operation-Location header not found.");
+            }
+        }
+
+        // Function to poll the OCR result until completion
+        function pollReadResult($operationLocation) {
+            $retries = 10;
+            while ($retries > 0) {
+                sleep(1); // wait a second before each poll
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $operationLocation);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    "Ocp-Apim-Subscription-Key: " . CV_SUBSCRIPTION_KEY
+                ]);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $pollResponse = curl_exec($ch);
+                $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+
+                $result = json_decode($pollResponse, true);
+                if (isset($result['status']) && $result['status'] === 'succeeded') {
+                    return $result;
+                }
+                $retries--;
+            }
+            return false;
+        }
+
+        // Call the OCR API and poll for the result
+        $operationLocation = callReadAPI($imageData);
+        $ocrResult = pollReadResult($operationLocation);
+
+        if (!$ocrResult) {
+            // Optionally remove the uploaded file if OCR fails
+            unlink($dst_resume);
+            die("Failed to retrieve OCR result in time.");
+        }
+
+        // Extract the text from the OCR result
+        $extractedText = "";
+        if (isset($ocrResult['analyzeResult']['readResults'])) {
+            foreach ($ocrResult['analyzeResult']['readResults'] as $page) {
+                foreach ($page['lines'] as $line) {
+                    $extractedText .= $line['text'] . "\n";
+                }
+            }
+        }
+
+        // Validate that the resume contains expected keywords (e.g., experience, education, skills)
+        $requiredKeywords = ['experience', 'education', 'skills'];
+        $isValidResume = true;
+        foreach ($requiredKeywords as $keyword) {
+            if (stripos($extractedText, $keyword) === false) {
+                $isValidResume = false;
+                break;
+            }
+        }
+
+        if (!$isValidResume) {
+            // Optionally remove the uploaded file if the resume is invalid
+            unlink($dst_resume);
+            echo "<script>alert('The uploaded resume does not appear to contain the necessary sections (experience, education, skills).'); window.history.back();</script>";
+            exit();
+        }
+        // --- End of OCR Verification ---
 
         // Insert user data into the database
         $sql = "INSERT INTO users VALUES (
@@ -112,7 +214,7 @@ if(isset($_POST["insert"])) {
         <form class="row needs-validation pt-3 w-100 d-flex align-items-start justify-content-center" method="post" enctype="multipart/form-data" novalidate>
             
             <!-- Heading left-aligned (same position as before) -->
-            <h4 class="w-100">Register as Employer</h4>
+            <h4 class="w-100">Register as Worker</h4>
 
             <!-- Left Column -->
             <div class="col-md-6 d-flex flex-column align-items-center px-4">
@@ -136,7 +238,8 @@ if(isset($_POST["insert"])) {
         &emsp;&emsp;
         <?php 
             echo '<span style="color:#white">Or Register as Worker?,</span>','&emsp;<a href="..\..\!SIGNUP\source\workerReg.php">Register</a>','<br>&emsp;&emsp;',
-            '<span style="color:#white">  Have an account?,</span>','&emsp;<a href="..\..\!SIGNUP\source\login.php">Log in</a>';?>
+            '<span style="color:#white">  Have an account?,</span>','&emsp;<a href="..\..\!SIGNUP\source\login.php">Log in</a>';
+        ?>
     </div>
 </body>
 </html>

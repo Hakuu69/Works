@@ -1,8 +1,9 @@
 <?php
 session_start();
 include "connection.php";
+include "config.php";  // Contains your CV_SUBSCRIPTION_KEY and CV_ENDPOINT
 
-// Enable error reporting
+// Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -23,14 +24,116 @@ if(isset($_POST["insert"])) {
         // File upload handling for the first ID
         $tm_id1 = md5(time() . "id1");
         $fnm_id1 = $_FILES["id1"]["name"];
-        $dst_id1 = "./../uploads/".$tm_id1.$fnm_id1;
-        $dst_id1_db = "../uploads/".$tm_id1.$fnm_id1;
+        $dst_id1 = "./../uploads/" . $tm_id1 . $fnm_id1;
+        $dst_id1_db = "../uploads/" . $tm_id1 . $fnm_id1;
 
         if (!move_uploaded_file($_FILES["id1"]["tmp_name"], $dst_id1)) {
             echo "Failed to upload first ID. Error details: " . $_FILES["id1"]["error"];
             exit();
         }
-
+        
+        // --- Microsoft Cognitive Services OCR Integration for ID Verification ---
+        
+        // Read the uploaded file content
+        $imageData = file_get_contents($dst_id1);
+        
+        // Function to call the Read (OCR) API
+        function callReadAPI($imageData) {
+            $url = CV_ENDPOINT . '/vision/v3.2/read/analyze';
+            $headers = [
+                "Ocp-Apim-Subscription-Key: " . CV_SUBSCRIPTION_KEY,
+                "Content-Type: application/octet-stream"
+            ];
+        
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $imageData);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HEADER, true); // Get headers for the Operation-Location
+        
+            $response = curl_exec($ch);
+            $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+            $header = substr($response, 0, $headerSize);
+            curl_close($ch);
+        
+            if ($status != 202) {
+                die("OCR request failed. HTTP Status: " . $status);
+            }
+        
+            // Extract Operation-Location header for polling
+            if (preg_match('/Operation-Location:\s*(.*)/i', $header, $matches)) {
+                return trim($matches[1]);
+            } else {
+                die("Operation-Location header not found.");
+            }
+        }
+        
+        // Function to poll the OCR result until completion
+        function pollReadResult($operationLocation) {
+            $retries = 10;
+            while ($retries > 0) {
+                sleep(1); // wait a second before each poll
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $operationLocation);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    "Ocp-Apim-Subscription-Key: " . CV_SUBSCRIPTION_KEY
+                ]);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $pollResponse = curl_exec($ch);
+                $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+        
+                $result = json_decode($pollResponse, true);
+                if (isset($result['status']) && $result['status'] === 'succeeded') {
+                    return $result;
+                }
+                $retries--;
+            }
+            return false;
+        }
+        
+        // Call the OCR API and poll for the result
+        $operationLocation = callReadAPI($imageData);
+        $ocrResult = pollReadResult($operationLocation);
+        
+        if (!$ocrResult) {
+            // Optionally remove the uploaded file if OCR fails
+            unlink($dst_id1);
+            die("Failed to retrieve OCR result in time.");
+        }
+        
+        // Extract the text from the OCR result
+        $extractedText = "";
+        if (isset($ocrResult['analyzeResult']['readResults'])) {
+            foreach ($ocrResult['analyzeResult']['readResults'] as $page) {
+                foreach ($page['lines'] as $line) {
+                    $extractedText .= $line['text'] . "\n";
+                }
+            }
+        }
+        
+        // Validate that the ID contains expected keywords (e.g., driver's license, passport, id, identification)
+        // At least one keyword must be present.
+        $requiredKeywords = ['driver', 'license', 'passport', 'id', 'identification'];
+        $isValidID = false;
+        foreach ($requiredKeywords as $keyword) {
+            if (stripos($extractedText, $keyword) !== false) {
+                $isValidID = true;
+                break;
+            }
+        }
+        
+        if (!$isValidID) {
+            // Optionally remove the uploaded file if the ID is invalid
+            unlink($dst_id1);
+            echo "<script>alert('The uploaded ID does not appear to be valid (driver\'s license, passport, or identification).'); window.history.back();</script>";
+            exit();
+        }
+        // --- End of OCR Verification ---
+        
         // Insert user data into the database
         $sql = "INSERT INTO users VALUES (
             NULL,
@@ -48,7 +151,7 @@ if(isset($_POST["insert"])) {
             'NULL',
             '0'
         )";
-
+        
         if (mysqli_query($conn, $sql)) {
             ?>
             <script type="text/javascript">
@@ -70,11 +173,11 @@ if(isset($_POST["insert"])) {
     <title>Employer | Register</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    
     <!-- JQuery Library -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-
+    
     <!-- Bootstrap 5.2.3 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
@@ -82,22 +185,22 @@ if(isset($_POST["insert"])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" 
             integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" 
             crossorigin="anonymous"></script>
-
+    
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@900&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-
+    
     <!-- Custom JS -->
     <script src="user.js" type="text/javascript"></script>
-
+    
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="index.css">
 </head>
-
+    
 <body class="section">
     <!-- Navigation bar -->
     <nav class="container">
@@ -106,14 +209,14 @@ if(isset($_POST["insert"])) {
             <span class="align-center fs-4"> | Public Employment Service Office</span>
         </a>
     </nav>
-
+    
     <!-- Content -->
     <div class="content" id="right">
         <form class="row needs-validation pt-3 w-100 d-flex align-items-start justify-content-center" method="post" enctype="multipart/form-data" novalidate>
             
             <!-- Heading left-aligned (same position as before) -->
             <h4 class="w-100">Register as Employer</h4>
-
+            
             <!-- ID -->
             <div class="col-md-6 d-flex flex-column align-items-center px-4">
                 <div class="w-100 d-flex flex-column align-items-center">
@@ -126,7 +229,7 @@ if(isset($_POST["insert"])) {
                     </div>
                 </div>
             </div>
-
+            
             <!-- Submit Button -->
             <div class="col-12 mt-4 d-flex justify-content-center">
                 <button type="submit" name="insert" class="btn btn-primary w-50 shadow-lg rounded-5" id="adduser">Register Account</button>
@@ -136,7 +239,8 @@ if(isset($_POST["insert"])) {
         &emsp;&emsp;
         <?php 
             echo '<span style="color:#white">Or Register as Worker?,</span>','&emsp;<a href="..\..\!SIGNUP\source\workerReg.php">Register</a>','<br>&emsp;&emsp;',
-            '<span style="color:#white">  Have an account?,</span>','&emsp;<a href="..\..\!SIGNUP\source\login.php">Log in</a>';?>
+            '<span style="color:#white">  Have an account?,</span>','&emsp;<a href="..\..\!SIGNUP\source\login.php">Log in</a>';
+        ?>
     </div>
 </body>
 </html>

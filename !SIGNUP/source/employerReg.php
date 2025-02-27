@@ -3,71 +3,83 @@ session_start();
 include "connection.php";
 
 if(isset($_POST["next"])) {
-    // Store the form data in session variables
-    $_SESSION['firstname'] = $_POST['firstname'];
-    $_SESSION['middlename'] = $_POST['middlename'];
-    $_SESSION['lastname'] = $_POST['lastname'];
-    $_SESSION['bdate'] = $_POST['bdate'];
-    $_SESSION['email'] = $_POST['email'];
-    $_SESSION['contact'] = $_POST['contact'];
-    $_SESSION['password'] = $_POST['password'];
+    $email = $_POST['email'];
+    $bdate = $_POST['bdate'];
+    $contact = $_POST['contact'];
 
-    // File upload handling for the profile photo
-    $tm_profile = md5(time() . "profile");
-    $fnm_profile = $_FILES["image"]["name"];
-    $dst_profile = "./../uploads/".$tm_profile.$fnm_profile;
-    $dst_profile_db = "../uploads/".$tm_profile.$fnm_profile;
+    // Check if the email is already registered
+    $check_query = "SELECT * FROM users WHERE email = ?";
+    $stmt = $conn->prepare($check_query);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if (move_uploaded_file($_FILES["image"]["tmp_name"], $dst_profile)) {
-        $_SESSION['profimg'] = $dst_profile_db;
+    $currentDate = new DateTime();
+    $birthDate = new DateTime($bdate);
+    $age = $currentDate->diff($birthDate)->y;
+
+    if($result->num_rows > 0) {
+        echo "<script>alert('Email already registered. Please use a different email.'); window.history.back();</script>";
+    } else if($_POST['password'] !== $_POST['repassword']) {
+        echo "<script>alert('Passwords do not match. Please re-enter your password.'); window.history.back();</script>";
+    } else if($age < 21) {
+        echo "<script>alert('You must be at least 21 years old to register.'); window.history.back();</script>";
+    } else if(!preg_match('/^\d{11}$/', $contact)) {
+        echo "<script>alert('Contact number must be exactly 11 digits.'); window.history.back();</script>";
     } else {
-        echo "Failed to upload profile photo.";
+        // Store the form data in session variables
+        $_SESSION['firstname'] = $_POST['firstname'];
+        $_SESSION['middlename'] = $_POST['middlename'];
+        $_SESSION['lastname'] = $_POST['lastname'];
+        $_SESSION['bdate'] = $_POST['bdate'];
+        $_SESSION['email'] = $_POST['email'];
+        $_SESSION['contact'] = $_POST['contact'];
+        $_SESSION['password'] = $_POST['password'];
+
+        // File upload handling for the profile photo
+        $tm_profile = md5(time() . "profile");
+        $fnm_profile = $_FILES["image"]["name"];
+        $dst_profile = "./../uploads/".$tm_profile.$fnm_profile;
+        $dst_profile_db = "../uploads/".$tm_profile.$fnm_profile;
+
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $dst_profile)) {
+            $_SESSION['profimg'] = $dst_profile_db;
+        } else {
+            echo "Failed to upload profile photo.";
+            exit();
+        }
+
+        // Redirect to the next page (idUpload.php)
+        header("Location: idUpload.php");
         exit();
     }
-
-    // Redirect to the next page (idUpload.php)
-    header("Location: idUpload.php");
-    exit();
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Page title and meta tags -->
     <title>Employer | Register</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- JQuery Library -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
-    <!-- Bootstrap 5.2.3 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-          rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-          crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" 
-            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" 
-            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@900&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Custom JS -->
     <script src="user.js" type="text/javascript"></script>
-
-    <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 
 <body class="section">
-    <!-- Navigation bar -->
     <nav class="container">
         <a class="navbar-brand">
             <img class="logo" src="../images/logo.png" alt="WORKS | Public Employment Service Office" height="60" width="60">
@@ -75,7 +87,6 @@ if(isset($_POST["next"])) {
         </a>
     </nav>
 
-    <!-- Content -->
     <div class="content" id="right">
         <form class="row needs-validation pt-3 w-100 d-flex align-items-center justify-content-center" method="post" enctype="multipart/form-data" novalidate>
             <h4>Register as Employer</h4>
@@ -109,8 +120,8 @@ if(isset($_POST["next"])) {
                     </div>
                     <div class="col-6">
                         <label for="contact" class="form-label">Contact Number</label>
-                        <input type="number" class="form-control shadow-none" name="contact" placeholder="09123456789" id="contact" required>
-                        <div class="invalid-feedback">Please enter user contact.</div>
+                        <input type="text" pattern="\d{11}" class="form-control shadow-none" name="contact" placeholder="09123456789" id="contact" required>
+                        <div class="invalid-feedback">Please enter a valid 11-digit contact number.</div>
                     </div>
                 </div>
 
@@ -125,6 +136,13 @@ if(isset($_POST["next"])) {
                     <input type="password" class="form-control shadow-none" name="password" placeholder="Enter password" id="password" required>
                     <div class="invalid-feedback">Please enter password.</div>
                 </div>
+
+                <div class="form-group pt-4">
+                    <label for="repassword" class="form-label">Re-enter Password</label>
+                    <input type="password" class="form-control shadow-none" name="repassword" placeholder="Re-enter password" id="repassword" required>
+                    <div class="invalid-feedback">Please re-enter password.</div>
+                </div>
+
                 <br>
                 <button type="submit" name="next" class="btn btn-primary mt-3 shadow-lg w-100 rounded-5" id="adduser">Next</button>
             </div>
@@ -143,7 +161,8 @@ if(isset($_POST["next"])) {
         &emsp;&emsp;
         <?php 
             echo '<span style="color:#white">Or Register as Worker?,</span>','&emsp;<a href="..\..\!SIGNUP\source\workerReg.php">Register</a>','<br>&emsp;&emsp;',
-            '<span style="color:#white">  Have an account?,</span>','&emsp;<a href="..\..\!SIGNUP\source\login.php">Log in</a>';?>
+            '<span style="color:#white">  Have an account?,</span>','&emsp;<a href="..\..\!SIGNUP\source\login.php">Log in</a>';
+        ?>
     </div>
 </body>
 </html>
