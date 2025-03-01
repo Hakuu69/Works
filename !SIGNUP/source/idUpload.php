@@ -149,6 +149,7 @@ if(isset($_POST["insert"])) {
             '$dst_id1_db',
             'NULL',
             'NULL',
+            '$_SESSION[lookingfor]',
             '0'
         )";
         

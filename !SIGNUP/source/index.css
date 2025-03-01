@@ -95,16 +95,17 @@ h4 {
     border-radius: 100%;
 }
 
-.specialty-section {
+.specialty-section, .lookingfor-section {
     margin-top: 15px;
 }
 
-.specialty-title {
+.specialty-title, .lookingfor-title {
     color: white;
     font-size: 18px;
     margin-bottom: 8px;
     display: block;
 }
+
 
 .checkbox-group {
     display: flex;

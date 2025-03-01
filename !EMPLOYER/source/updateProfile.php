@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['id'])) {
     $contact = $_POST['contact'];
     $id1 = $_FILES['id1']['name'];
     $profimg = $_FILES['profimg']['name'];
+    $lookingfor = isset($_POST['lookingfor']) ? $_POST['lookingfor'] : [];
     
     // Directory where files will be uploaded
     $target_dir = "../../!SIGNUP/uploads/";
@@ -29,7 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['id'])) {
         $query .= ", profimg = '$profimg'";
     }
     
-    $query .= " WHERE id = $user_id";
+    // Convert lookingfor array to comma-separated string
+    $lookingfor_str = implode(',', $lookingfor);
+    $query .= ", lookingfor = '$lookingfor_str' WHERE id = $user_id";
     
     if (mysqli_query($conn, $query)) {
         echo "<script>alert('Profile Updated'); window.location.href = 'profileEmployer.php';</script>";

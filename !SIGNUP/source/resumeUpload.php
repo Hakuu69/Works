@@ -148,6 +148,7 @@ if (isset($_POST["insert"])) {
             'NULL',
             '$dst_resume_db',
             '$_SESSION[specialty]',
+            'NULL',
             '0'
         )";
 

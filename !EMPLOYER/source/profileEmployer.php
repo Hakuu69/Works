@@ -14,6 +14,10 @@ if (isset($_SESSION['id'])) {
         $row = mysqli_fetch_assoc($result);
         $profile_photo = $row['profimg'];
         $profile_photo_path = '../../!SIGNUP/uploads/' . $profile_photo;
+
+
+        // Fetch and split the lookingfor into an array
+        $lookingfor = explode(',', $row['lookingfor']);
     } else {
         echo "User not found";
         exit;
@@ -122,6 +126,17 @@ if (isset($_SESSION['id'])) {
         <div class="form-group">
             <label for="contact">Contact</label>
             <input type="text" class="form-control" id="contact" name="contact" value="<?php echo $row['contact']; ?>">
+        </div>
+        <div class="form-group">
+            <label for="lookingfor">Looking for:</label><br>
+            <input type="checkbox" id="welder" name="lookingfor[]" value="Welder" <?php if(in_array('Welder', $lookingfor)) echo 'checked'; ?>>
+            <label for="welder">Welder</label><br>
+            <input type="checkbox" id="mechanic" name="lookingfor[]" value="Mechanic" <?php if(in_array('Mechanic', $lookingfor)) echo 'checked'; ?>>
+            <label for="mechanic">Mechanic</label><br>
+            <input type="checkbox" id="electrician" name="lookingfor[]" value="Electrician" <?php if(in_array('Electrician', $lookingfor)) echo 'checked'; ?>>
+            <label for="electrician">Electrician</label><br>
+            <input type="checkbox" id="construction" name="lookingfor[]" value="Construction Worker" <?php if(in_array('Construction Worker', $lookingfor)) echo 'checked'; ?>>
+            <label for="construction">Contstruction Worker</label><br>
         </div>
         <div class="form-group">
             <label for="id1">ID</label>

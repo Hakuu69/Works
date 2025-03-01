@@ -35,7 +35,7 @@ if (isset($_GET['id'])) {
     }
     
     // Fetch employer details using prepared statement
-    $stmt = $conn->prepare("SELECT profimg, firstname, middlename, lastname, email, contact, id1, isHired FROM users WHERE id = ? AND role = 'employer'");
+    $stmt = $conn->prepare("SELECT profimg, firstname, middlename, lastname, email, contact, id1, lookingfor, isHired FROM users WHERE id = ? AND role = 'employer'");
     $stmt->bind_param("i", $employer_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -171,6 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="profile-section">
     <img src="../../!SIGNUP/uploads/<?php echo $employer['profimg']; ?>" alt="Profile Photo">
     <h4><?php echo $employer['firstname'] . ' ' . $employer['middlename'] . ' ' . $employer['lastname']; ?></h4>
+    <a>Looking for: <?php echo $employer['lookingfor']; ?></a>
     <a>Email: <?php echo $employer['email']; ?></a>
     <a>Contact: <?php echo $employer['contact']; ?></a>
     <a>ID: <a href="../../!SIGNUP/uploads/<?php echo $employer['id1']; ?>" target="_blank">View ID</a></a>

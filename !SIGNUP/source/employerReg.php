@@ -36,6 +36,13 @@ if(isset($_POST["next"])) {
         $_SESSION['contact'] = $_POST['contact'];
         $_SESSION['password'] = $_POST['password'];
 
+        // Checkbox lookingfor
+        if (isset($_POST['lookingfor'])) {
+            $_SESSION['lookingfor'] = implode(',', $_POST['lookingfor']);
+        } else {
+            $_SESSION['lookingfor'] = '';
+        }
+
         // File upload handling for the profile photo
         $tm_profile = md5(time() . "profile");
         $fnm_profile = $_FILES["image"]["name"];
@@ -125,23 +132,51 @@ if(isset($_POST["next"])) {
                     </div>
                 </div>
 
+                    <!-- Looking For Section -->
+                    <div class="lookingfor-section pt-3">
+                        <label class="lookingfor-title"><strong>Loooking for:</strong></label>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="welder" name="lookingfor[]" value="Welder">
+                                    <label for="welder">Welder</label>
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="electrician" name="lookingfor[]" value="Electrician">
+                                    <label for="electrician">Electrician</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="mechanic" name="lookingfor[]" value="Mechanic">
+                                    <label for="mechanic">Mechanic</label>
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="construction" name="lookingfor[]" value="Construction Worker">
+                                    <label for="construction">Construction Worker</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 <div class="form-group pt-4">
                     <label for="email" class="form-label">Email Address</label>
                     <input type="email" class="form-control shadow-none" name="email" placeholder="e.g. juan@your-domain.com" id="email" required>
                     <div class="invalid-feedback">Please enter a valid email address.</div>                     
                 </div>
 
-                <div class="form-group pt-4">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control shadow-none" name="password" placeholder="Enter password" id="password" required>
-                    <div class="invalid-feedback">Please enter password.</div>
-                </div>
-
-                <div class="form-group pt-4">
-                    <label for="repassword" class="form-label">Re-enter Password</label>
-                    <input type="password" class="form-control shadow-none" name="repassword" placeholder="Re-enter password" id="repassword" required>
-                    <div class="invalid-feedback">Please re-enter password.</div>
-                </div>
+                <div class="row pt-4">
+                        <div class="col-6">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control shadow-none" name="password" placeholder="Enter password" id="password" required>
+                            <div class="invalid-feedback">Please enter password.</div>
+                        </div>
+                        <div class="col-6">
+                            <label for="repassword" class="form-label">Re-enter Password</label>
+                            <input type="password" class="form-control shadow-none" name="repassword" placeholder="Re-enter password" id="repassword" required>
+                            <div class="invalid-feedback">Please re-enter password.</div>
+                        </div>
+                    </div>
 
                 <br>
                 <button type="submit" name="next" class="btn btn-primary mt-3 shadow-lg w-100 rounded-5" id="adduser">Next</button>

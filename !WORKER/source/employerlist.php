@@ -23,8 +23,23 @@ if (isset($_SESSION['id'])) {
     $profile_photo_path = '../../!SIGNUP/images/profilePhoto.png';
 }
 
+// --- Updated Filtering System for lookingfor ---
+// Previously, the filtering used an IN() clause. However, since the worker's lookingfor
+// is stored as a comma-separated string, we need to use FIND_IN_SET() for each selected value.
+$filterWhere = "";
+if (isset($_GET['lookingfor']) && !empty($_GET['lookingfor'])) {
+    $filterConditions = array();
+    foreach($_GET['lookingfor'] as $spec) {
+        $specEscaped = mysqli_real_escape_string($conn, $spec);
+        $filterConditions[] = "FIND_IN_SET('$specEscaped', lookingfor) > 0";
+    }
+    if (!empty($filterConditions)) {
+       $filterWhere = " AND (" . implode(" OR ", $filterConditions) . ")";
+    }
+}
+
 // employer count
-$wcount = "SELECT COUNT(*) as employer_count FROM users WHERE role='employer' AND isHired=0";
+$wcount = "SELECT COUNT(*) as employer_count FROM users WHERE role='employer' AND isHired=0" . $filterWhere;
 $result = $conn->query($wcount);
 
 if ($result->num_rows > 0) {
@@ -35,7 +50,7 @@ if ($result->num_rows > 0) {
 }
 
 // fetching employers who are not hired
-$res = mysqli_query($conn, "SELECT id, profimg, firstname, middlename, lastname FROM users WHERE role='employer' AND isHired=0");
+$res = mysqli_query($conn, "SELECT id, profimg, firstname, middlename, lastname, lookingfor FROM users WHERE role='employer' AND isHired=0" . $filterWhere);
 $numrows = mysqli_num_rows($res);
 ?>
 
@@ -49,8 +64,13 @@ $numrows = mysqli_num_rows($res);
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
    
    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLa+naA4r59gqGU6EGGJnJXn/tWtIaxVXMxm0" crossorigin="anonymous"></script>
-   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+     <!-- Updated integrity attribute for Popper.js -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" 
+           integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" 
+           crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" 
+           integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" 
+           crossorigin="anonymous"></script>
 
    <title>WORKS | We find works</title>
    <link rel="icon" href="../images/logo.png">
@@ -107,6 +127,35 @@ $numrows = mysqli_num_rows($res);
 <body>
 <!-- Content -->
 <br><br><br><br><br><br>
+
+<!-- Filter Section -->
+<div class="container mb-4">
+    <form method="GET" action="employerlist.php">
+    <label for="lookingfor">Filter by Looking for:</label>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="lookingfor[]" value="Welder" id="welder" 
+            <?php if(isset($_GET['lookingfor']) && in_array('Welder', $_GET['lookingfor'])) echo 'checked'; ?>>
+            <label class="form-check-label" for="welder">Welder</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="lookingfor[]" value="Electrician" id="electrician" 
+            <?php if(isset($_GET['lookingfor']) && in_array('Electrician', $_GET['lookingfor'])) echo 'checked'; ?>>
+            <label class="form-check-label" for="electrician">Electrician</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="lookingfor[]" value="Mechanic" id="mechanic" 
+            <?php if(isset($_GET['lookingfor']) && in_array('Mechanic', $_GET['lookingfor'])) echo 'checked'; ?>>
+            <label class="form-check-label" for="mechanic">Mechanic</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="lookingfor[]" value="Construction Worker" id="construction" 
+            <?php if(isset($_GET['lookingfor']) && in_array('Construction Worker', $_GET['lookingfor'])) echo 'checked'; ?>>
+            <label class="form-check-label" for="construction">Construction Worker</label>
+        </div>
+        <button type="submit" class="btn btn-primary ml-2">Filter</button>
+    </form>
+</div>
+
 <div class="employer-section">
   <div class="employer-header">AVAILABLE EMPLOYERS (<?php echo $employerCount; ?>)</div>
   <div class="employer-container">
@@ -117,6 +166,7 @@ $numrows = mysqli_num_rows($res);
             <img src="../../!SIGNUP/uploads/' . $employer['profimg'] . '" class="card-img-top" alt="employer Photo">
             <div class="employer-details">
                   <h5>' . $employer['firstname'] . ' ' . $employer['middlename'] . ' ' . $employer['lastname'] . '</h5>
+                  <a>Looking for: ' . $employer['lookingfor'] . '</a>
             </div>
             <div class="buttons">
                   <a href="employerHire.php?id=' . $employer['id'] . '" class="hire">Apply</a>
